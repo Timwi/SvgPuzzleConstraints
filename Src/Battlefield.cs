@@ -6,7 +6,7 @@ using RT.Util;
 namespace SvgPuzzleConstraints
 {
     [SvgConstraintInfo("Battlefield")]
-    public class Battlefield : SvgRowColConstraint
+    public class Battlefield : SvgRowColNumberConstraint
     {
         public override string Description => $"The first and last number in the region represent the sizes of two armies, who march inward; the clue ({Clue}) specifies the sum of the digits that are either sandwiched between the armies or within the armies’ overlap.";
         public override double ExtraTop => IsCol ? .5 : 0;
@@ -22,19 +22,14 @@ namespace SvgPuzzleConstraints
             Wide = true
         };
 
-        public Battlefield(bool isCol, int rowCol, int clue) : base(isCol, rowCol)
-        {
-            Clue = clue;
-        }
+        public Battlefield(bool isCol, int rowCol, int clue, RowColDisplay display = RowColDisplay.Default) : base(isCol, rowCol, clue, display) { }
         private Battlefield() { }    // for Classify
-
-        public int Clue { get; private set; }
 
         protected override IEnumerable<Constraint> getConstraints() { yield return new BattlefieldUniquenessConstraint(Clue, GetAffectedCells(false)); }
 
         public override bool Verify(int[] grid) => BattlefieldUniquenessConstraint.CalculateBattlefieldClue(GetAffectedCells(false).Select(cell => grid[cell]).ToArray()) == Clue;
 
-        public override string Svg => $@"<g transform='translate({(IsCol ? RowCol : -1)}, {(IsCol ? -.9 : RowCol)}) scale(.001)'>
+        protected override string ElaborateSvg => $@"<g transform='translate({(IsCol ? RowCol : -1)}, {(IsCol ? -.9 : RowCol)}) scale(.001)'>
             <linearGradient id='battlefield-e'>
               <stop offset='0' stop-color='#fff'/>
               <stop offset='1' stop-color='#fff' stop-opacity='0'/>

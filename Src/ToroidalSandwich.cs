@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using PuzzleSolvers;
 using RT.Util;
-using RT.Util.ExtensionMethods;
 
 namespace SvgPuzzleConstraints
 {
     [SvgConstraintInfo("Toroidal sandwich")]
-    public class ToroidalSandwich : SvgRowColConstraint
+    public class ToroidalSandwich : SvgRowColNumberConstraint
     {
-        public override string Description => $"Within this {(IsCol ? "column" : "row")}, the digits after the {Digit1} and before the {Digit2}, wrapping around the edges of the grid if necessary, must add up to {Sum}.";
+        public override string Description => $"Within this {(IsCol ? "column" : "row")}, the digits after the {Digit1} and before the {Digit2}, wrapping around the edges of the grid if necessary, must add up to {Clue}.";
         public override double ExtraTop => IsCol ? .25 : 0;
         public override double ExtraLeft => IsCol ? 0 : .5;
         public override bool ShownTopLeft => true;
@@ -24,19 +23,17 @@ namespace SvgPuzzleConstraints
             Wide = true
         };
 
-        public ToroidalSandwich(bool isCol, int rowCol, int digit1, int digit2, int sum) : base(isCol, rowCol)
+        public ToroidalSandwich(bool isCol, int rowCol, int digit1, int digit2, int sum, RowColDisplay display = RowColDisplay.Default) : base(isCol, rowCol, sum, display)
         {
             Digit1 = digit1;
             Digit2 = digit2;
-            Sum = sum;
         }
         private ToroidalSandwich() { }    // for Classify
 
         public int Digit1 { get; private set; }
         public int Digit2 { get; private set; }
-        public int Sum { get; private set; }
 
-        protected override IEnumerable<Constraint> getConstraints() { yield return new SandwichWraparoundUniquenessConstraint(Digit1, Digit2, Sum, Ut.NewArray(9, x => IsCol ? (RowCol + 9 * x) : (x + 9 * RowCol))); }
+        protected override IEnumerable<Constraint> getConstraints() { yield return new SandwichWraparoundUniquenessConstraint(Digit1, Digit2, Clue, Ut.NewArray(9, x => IsCol ? (RowCol + 9 * x) : (x + 9 * RowCol))); }
 
         public override bool Verify(int[] grid)
         {
@@ -52,10 +49,10 @@ namespace SvgPuzzleConstraints
                 s += numbers[i];
                 i = (i + 1) % numbers.Length;
             }
-            return s == Sum;
+            return s == Clue;
         }
 
-        public override string Svg => $@"<g transform='translate({(IsCol ? RowCol : -1.025)}, {(IsCol ? -.85 : RowCol)}) scale(.01)' font-size='23'>
+        protected override string ElaborateSvg => $@"<g transform='translate({(IsCol ? RowCol : -1.025)}, {(IsCol ? -.85 : RowCol)}) scale(.01)' font-size='23'>
   <linearGradient id='d' x1='9.732' x2='74.285' y1='67.527' y2='67.527' gradientTransform='matrix(.429 0 0 .429 53.625 57.976)' gradientUnits='userSpaceOnUse'>
     <stop offset='0' stop-color='#ffc044'/>
     <stop offset='.849' stop-color='#d95f23'/>
@@ -185,7 +182,7 @@ namespace SvgPuzzleConstraints
   </g>
   <text x='20' y='47.192' text-anchor='end'>{Digit1}</text>
   <text x='20' y='67.84' text-anchor='end'>{Digit2}</text>
-  <text x='70' y='57.608' text-anchor='start'>{Sum}</text>
+  <text x='70' y='57.608' text-anchor='start'>{Clue}</text>
 </g>";
 
         public static IList<SvgConstraint> Generate(int[] sudoku)

@@ -6,7 +6,7 @@ using RT.Util;
 namespace SvgPuzzleConstraints
 {
     [SvgConstraintInfo("Y-sum")]
-    public class YSum : SvgRowColConstraint
+    public class YSum : SvgRowColNumberConstraint
     {
         public override string Description => $"The sum of the first Y digits in this {(IsCol ? "column" : "row")} must add up to {Clue}, where Y is the Xth digit in the {(IsCol ? "column" : "row")} and X is the first.";
         public override double ExtraTop => IsCol && !Reverse ? .5 : 0;
@@ -24,21 +24,17 @@ namespace SvgPuzzleConstraints
             Wide = true
         };
 
-        public YSum(bool isCol, int rowCol, bool reverse, int clue) : base(isCol, rowCol)
-        {
-            Clue = clue;
-            Reverse = reverse;
-        }
+        public YSum(bool isCol, int rowCol, bool reverse, int clue, RowColDisplay display = RowColDisplay.Default)
+            : base(isCol, rowCol, clue, display) { Reverse = reverse; }
         private YSum() { }    // for Classify
 
-        public int Clue { get; private set; }
         public bool Reverse { get; private set; }
 
         protected override IEnumerable<Constraint> getConstraints() { yield return new YSumUniquenessConstraint(Clue, GetAffectedCells(Reverse)); }
 
         public override bool Verify(int[] grid) => GetAffectedCells(Reverse).Select(cell => grid[cell]).ToArray().Apply(numbers => numbers.Take(numbers[numbers[0] - 1]).Sum() == Clue);
 
-        public override string Svg => $@"<g transform='translate({(IsCol ? RowCol : Reverse ? 8.8 : -.8)}, {(IsCol ? (Reverse ? 9 : -.8) : RowCol + .1)})'>
+        protected override string ElaborateSvg => $@"<g transform='translate({(IsCol ? RowCol : Reverse ? 8.8 : -.8)}, {(IsCol ? (Reverse ? 9 : -.8) : RowCol + .1)})'>
             <text x='.5' y='.325' font-size='.3'>YΣ</text>
             <text x='.5' y='.65' font-size='.3'>{Clue}</text>
         </g>";
