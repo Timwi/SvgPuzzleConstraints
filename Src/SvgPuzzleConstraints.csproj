@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RT.Serialization" Version="2.0.1684" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\PuzzleSolvers\PuzzleSolvers\PuzzleSolvers.csproj" />
+  </ItemGroup>
+
+</Project>
