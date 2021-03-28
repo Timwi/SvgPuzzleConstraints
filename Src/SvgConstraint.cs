@@ -25,6 +25,7 @@ namespace SvgPuzzleConstraints
         public virtual double ExtraTop => 0;
         public virtual double ExtraRight => 0;
         public virtual double ExtraLeft => 0;
+        public virtual IEnumerable<string> SvgDefs => Enumerable.Empty<string>();
 
         [ClassifyIgnore]
         private Constraint[] _cachedConstraint;

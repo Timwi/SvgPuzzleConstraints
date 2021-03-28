@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using PuzzleSolvers;
+using PuzzleSolvers.Exotic;
 using RT.Util;
 
 namespace SvgPuzzleConstraints

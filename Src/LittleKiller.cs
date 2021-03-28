@@ -32,8 +32,9 @@ namespace SvgPuzzleConstraints
         public ClueDirection Direction { get; private set; }
         public int Offset { get; private set; }
         public int Sum { get; private set; }
+        public bool Opposite { get; private set; }
 
-        public LittleKiller(ClueDirection dir, int offset, int sum) { Direction = dir; Offset = offset; Sum = sum; }
+        public LittleKiller(ClueDirection dir, int offset, int sum, bool opposite = false) { Direction = dir; Offset = offset; Sum = sum; Opposite = opposite; }
         private LittleKiller() { }  // for Classify
 
         public int[] AffectedCells => GetAffectedCells(Direction, Offset);
@@ -51,22 +52,39 @@ namespace SvgPuzzleConstraints
         const double svgArrLen = .275;
         const double svgArrWidth = .2;
         const double svgMargin = .1;
-        public override string Svg => Direction switch
-        {
-            ClueDirection.SouthEast =>
-                $"<path d='M {Offset - svgMargin - svgArrLen} {-svgMargin - svgArrLen} {Offset - svgMargin} {-svgMargin} M {Offset - svgMargin - svgArrWidth} {-svgMargin} h {svgArrWidth} v {-svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
-                $"<text text-anchor='middle' x='{Offset - svgMargin - svgArrLen - svgMargin}' y='{-svgMargin - svgArrLen - svgMargin + .05}' font-size='.3'>{Sum}</text>",
-            ClueDirection.SouthWest =>
-                $"<path d='M {9 + svgMargin + svgArrLen} {Offset - svgMargin - svgArrLen} {9 + svgMargin} {Offset - svgMargin} M {9 + svgMargin} {Offset - svgMargin - svgArrWidth} v {svgArrWidth} h {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
-                $"<text text-anchor='middle' x='{9 + svgMargin + svgArrLen + svgMargin}' y='{Offset - svgMargin - svgArrLen - svgMargin + .05}' font-size='.3'>{Sum}</text>",
-            ClueDirection.NorthWest =>
-                $"<path d='M {9 - Offset + svgMargin + svgArrLen} {9 + svgMargin + svgArrLen} {9 - Offset + svgMargin} {9 + svgMargin} M {9 - Offset + svgMargin + svgArrWidth} {9 + svgMargin} h {-svgArrWidth} v {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
-                $"<text text-anchor='middle' x='{9 - Offset + svgMargin + svgArrLen + svgMargin}' y='{9 + svgMargin + svgArrLen + svgMargin + .2}' font-size='.3'>{Sum}</text>",
-            ClueDirection.NorthEast =>
-                $"<path d='M {-svgMargin - svgArrLen} {9 - Offset + svgMargin + svgArrLen} {-svgMargin} {9 - Offset + svgMargin} M {-svgMargin - svgArrWidth} {9 - Offset + svgMargin} h {svgArrWidth} v {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
-                $"<text text-anchor='middle' x='{-svgMargin - svgArrLen - svgMargin}' y='{9 - Offset + svgMargin + svgArrLen + svgMargin + .2}' font-size='.3'>{Sum}</text>",
-            _ => null
-        };
+        public override string Svg => Opposite
+            ? Direction switch
+            {
+                ClueDirection.SouthEast =>
+                    $"<path d='M {9 + svgMargin + svgArrLen} {9 - Offset + svgMargin + svgArrLen} {9 + svgMargin} {9 - Offset + svgMargin} M {9 + svgMargin} {9 - Offset + svgMargin + svgArrWidth} v {-svgArrWidth} h {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
+                    $"<text text-anchor='middle' x='{9 + svgMargin + svgArrLen + svgMargin}' y='{9 - Offset + svgMargin + svgArrLen + svgMargin + .2}' font-size='.35'>{Sum}</text>",
+                ClueDirection.SouthWest =>
+                    $"<path d='M {Offset - svgMargin - svgArrLen} {9 + svgMargin + svgArrLen} {Offset - svgMargin} {9 + svgMargin} M {Offset - svgMargin - svgArrWidth} {9 + svgMargin} h {svgArrWidth} v {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
+                    $"<text text-anchor='middle' x='{Offset - svgMargin - svgArrLen - svgMargin}' y='{9 + svgMargin + svgArrLen + svgMargin + .2}' font-size='.35'>{Sum}</text>",
+                ClueDirection.NorthWest =>
+                    $"<path d='M {-svgMargin - svgArrLen} {Offset - svgMargin - svgArrLen} {-svgMargin} {Offset - svgMargin} M {-svgMargin - svgArrWidth} {Offset - svgMargin} h {svgArrWidth} v {-svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
+                    $"<text text-anchor='middle' x='{-svgMargin - svgArrLen - svgMargin}' y='{Offset - svgMargin - svgArrLen - svgMargin + .05}' font-size='.35'>{Sum}</text>",
+                ClueDirection.NorthEast =>
+                    $"<path d='M {9 - Offset + svgMargin + svgArrLen} {-svgMargin - svgArrLen} {9 - Offset + svgMargin} {-svgMargin} M {9 - Offset + svgMargin} {-svgMargin - svgArrWidth} v {svgArrWidth} h {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
+                    $"<text text-anchor='middle' x='{9 - Offset + svgMargin + svgArrLen + svgMargin}' y='{-svgMargin - svgArrLen - svgMargin + .05}' font-size='.35'>{Sum}</text>",
+                _ => null
+            }
+            : Direction switch
+            {
+                ClueDirection.SouthEast =>
+                    $"<path d='M {Offset - svgMargin - svgArrLen} {-svgMargin - svgArrLen} {Offset - svgMargin} {-svgMargin} M {Offset - svgMargin - svgArrWidth} {-svgMargin} h {svgArrWidth} v {-svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
+                    $"<text text-anchor='middle' x='{Offset - svgMargin - svgArrLen - svgMargin}' y='{-svgMargin - svgArrLen - svgMargin + .05}' font-size='.35'>{Sum}</text>",
+                ClueDirection.SouthWest =>
+                    $"<path d='M {9 + svgMargin + svgArrLen} {Offset - svgMargin - svgArrLen} {9 + svgMargin} {Offset - svgMargin} M {9 + svgMargin} {Offset - svgMargin - svgArrWidth} v {svgArrWidth} h {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
+                    $"<text text-anchor='middle' x='{9 + svgMargin + svgArrLen + svgMargin}' y='{Offset - svgMargin - svgArrLen - svgMargin + .05}' font-size='.35'>{Sum}</text>",
+                ClueDirection.NorthWest =>
+                    $"<path d='M {9 - Offset + svgMargin + svgArrLen} {9 + svgMargin + svgArrLen} {9 - Offset + svgMargin} {9 + svgMargin} M {9 - Offset + svgMargin + svgArrWidth} {9 + svgMargin} h {-svgArrWidth} v {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
+                    $"<text text-anchor='middle' x='{9 - Offset + svgMargin + svgArrLen + svgMargin}' y='{9 + svgMargin + svgArrLen + svgMargin + .2}' font-size='.35'>{Sum}</text>",
+                ClueDirection.NorthEast =>
+                    $"<path d='M {-svgMargin - svgArrLen} {9 - Offset + svgMargin + svgArrLen} {-svgMargin} {9 - Offset + svgMargin} M {-svgMargin - svgArrWidth} {9 - Offset + svgMargin} h {svgArrWidth} v {svgArrWidth}' stroke='black' stroke-width='.02' fill='none' />" +
+                    $"<text text-anchor='middle' x='{-svgMargin - svgArrLen - svgMargin}' y='{9 - Offset + svgMargin + svgArrLen + svgMargin + .2}' font-size='.35'>{Sum}</text>",
+                _ => null
+            };
 
         public override bool ClashesWith(SvgConstraint other) => other switch
         {

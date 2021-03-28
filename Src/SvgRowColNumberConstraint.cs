@@ -16,10 +16,10 @@ namespace SvgPuzzleConstraints
         protected SvgRowColNumberConstraint() { }    // for Classify
 
         public sealed override string Svg =>
-            IsCol && Display == RowColDisplay.TopLeft ? $@"<text x='{RowCol + .5}' y='.65' font-size='.8'>{Clue}</text>" :
-            IsCol && Display == RowColDisplay.BottomRight ? $@"<text x='{RowCol + .5}' y='9.1' font-size='.8'>{Clue}</text>" :
-            !IsCol && Display == RowColDisplay.TopLeft ? $@"<text x='-.1' y='{RowCol + .8}' font-size='.8' text-anchor='end'>{Clue}</text>" :
-            !IsCol && Display == RowColDisplay.BottomRight ? $@"<text x='9.1' y='{RowCol + .8}' font-size='.8' text-anchor='start'>{Clue}</text>" :
+            IsCol && Display == RowColDisplay.TopLeft ? $@"<text x='{RowCol + .5}' y='-.25' font-size='.5'>{Clue}</text>" :
+            IsCol && Display == RowColDisplay.BottomRight ? $@"<text x='{RowCol + .5}' y='9.7' font-size='.5'>{Clue}</text>" :
+            !IsCol && Display == RowColDisplay.TopLeft ? $@"<text x='-.25' y='{RowCol + .675}' font-size='.5' text-anchor='end'>{Clue}</text>" :
+            !IsCol && Display == RowColDisplay.BottomRight ? $@"<text x='9.25' y='{RowCol + .675}' font-size='.5' text-anchor='start'>{Clue}</text>" :
             ElaborateSvg;
         protected abstract string ElaborateSvg { get; }
 

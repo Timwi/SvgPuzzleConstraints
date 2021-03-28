@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using PuzzleSolvers;
+using RT.Serialization;
 using RT.Util;
 using RT.Util.ExtensionMethods;
 
@@ -19,15 +20,21 @@ namespace SvgPuzzleConstraints
             Reason = "In the first cage, the 5 repeats. In the second cage, 2 + 7 is not 10."
         };
 
-        public KillerCage(int[] cells, int? sum) : base(cells)
+        public KillerCage(int[] cells, int? sum = null, bool nonUnique = false, bool shaded = false) : base(cells)
         {
             Sum = sum;
+            NonUnique = nonUnique;
+            Shaded = shaded;
         }
         private KillerCage() { }    // for Classify
 
         public int? Sum { get; private set; }
+        [ClassifyIgnoreIfDefault]
+        public bool NonUnique { get; private set; }
+        [ClassifyIgnoreIfDefault]
+        public bool Shaded { get; private set; }
 
-        protected override IEnumerable<Constraint> getConstraints() { yield return Sum == null ? new UniquenessConstraint(Cells) : new SumUniquenessConstraint(Sum.Value, Cells); }
+        protected override IEnumerable<Constraint> getConstraints() { yield return Sum == null ? new UniquenessConstraint(Cells) : NonUnique ? new SumConstraint(Sum.Value, Cells) : new SumUniquenessConstraint(Sum.Value, Cells); }
 
         public override bool Verify(int[] grid)
         {
@@ -40,7 +47,7 @@ namespace SvgPuzzleConstraints
 
         public override bool ClashesWith(SvgConstraint other) => other is SvgRegionConstraint kc && kc.Cells.Intersect(Cells).Any();
 
-        public override string Svg => $"<path d='{GenerateSvgPath(Cells, .06, .06, Sum.NullOr(s => .275), Sum.NullOr(s => .25))}' fill='none' stroke='black' stroke-width='.025' stroke-dasharray='.09,.07' />"
+        public override string Svg => $"<path d='{GenerateSvgPath(Cells, .06, .06, Sum.NullOr(s => .275), Sum.NullOr(s => .25))}' {(Shaded ? "fill='rgba(0, 0, 0, .2)'" : "fill='none' stroke='black' stroke-width='.025' stroke-dasharray='.09,.07'")} />"
             + Sum.NullOr(s => $"<text x='{svgX(Cells.Min()) - .46}' y='{svgY(Cells.Min()) - .25}' text-anchor='start' font-size='.25'>{s}</text>");
 
         public static IList<SvgConstraint> Generate(int[] sudoku, int[][] uniquenessRegions) => uniquenessRegions
