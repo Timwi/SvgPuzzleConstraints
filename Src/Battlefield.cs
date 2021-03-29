@@ -29,93 +29,112 @@ namespace SvgPuzzleConstraints
 
         public override bool Verify(int[] grid) => BattlefieldUniquenessConstraint.CalculateBattlefieldClue(GetAffectedCells(false).Select(cell => grid[cell]).ToArray()) == Clue;
 
+        public override IEnumerable<string> SvgDefs
+        {
+            get
+            {
+                yield return @"
+                    <linearGradient id='battlefield-e'>
+                      <stop offset='0' stop-color='#fff'/>
+                      <stop offset='1' stop-color='#fff' stop-opacity='0'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-d'>
+                      <stop offset='0' stop-color='#fff'/>
+                      <stop offset='.778' stop-color='#cbcbcb'/>
+                      <stop offset='1' stop-color='#8c8c8c'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-a'>
+                      <stop offset='0' stop-color='maroon'/>
+                      <stop offset='.5' stop-color='#ff0c0c'/>
+                      <stop offset='1' stop-color='maroon'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-b'>
+                      <stop offset='0' stop-color='#898989'/>
+                      <stop offset='.5' stop-color='#e6e6e6'/>
+                      <stop offset='1' stop-color='#a4a4a4'/>
+                    </linearGradient>";
+                yield return @"<linearGradient id='battlefield-q' x1='172.584' x2='508.164' y1='523.652' y2='527.761' gradientTransform='translate(0 -109.238)' gradientUnits='userSpaceOnUse' xlink:href='#battlefield-a'/>";
+                yield return @"<linearGradient id='battlefield-u' x1='156.148' x2='276.683' y1='615.423' y2='683.909' gradientTransform='matrix(1.00332 0 0 1 -4.184 -113.875)' gradientUnits='userSpaceOnUse' spreadMethod='reflect' xlink:href='#battlefield-b'/>";
+                yield return @"<linearGradient id='battlefield-s' x1='45.442' x2='330.588' y1='449.999' y2='533.551' gradientTransform='matrix(1 0 0 -1 -2.318 1035.857)' gradientUnits='userSpaceOnUse' spreadMethod='reflect' xlink:href='#battlefield-b'/>";
+                yield return @"<linearGradient id='battlefield-t' x1='166.405' x2='300.026' y1='707.505' y2='740.378' gradientTransform='matrix(1 0 0 -1 -2.318 1035.857)' gradientUnits='userSpaceOnUse' spreadMethod='reflect' xlink:href='#battlefield-b'/>";
+                yield return @"
+                    <linearGradient id='battlefield-c'>
+                      <stop offset='0' stop-color='#696969'/>
+                      <stop offset='.5' stop-color='#fff'/>
+                      <stop offset='1' stop-color='#939393'/>
+                    </linearGradient>";
+                yield return @"<linearGradient id='battlefield-w' x1='719.457' x2='803.146' y1='591.232' y2='638.464' gradientTransform='matrix(1.00332 0 0 1 -455.509 -74.515)' gradientUnits='userSpaceOnUse' spreadMethod='reflect' xlink:href='#battlefield-b'/>";
+                yield return @"
+                    <linearGradient id='battlefield-i'>
+                      <stop offset='0' stop-color='#434343'/>
+                      <stop offset='.5' stop-color='#fff'/>
+                      <stop offset='1' stop-color='#5a5a5a'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-n'>
+                      <stop offset='0' stop-color='#333'/>
+                      <stop offset='1' stop-color='#cecece'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-f'>
+                      <stop offset='0' stop-color='#fff'/>
+                      <stop offset='.689' stop-color='#bfbfbf'/>
+                      <stop offset='1' stop-color='#525252'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-g'>
+                      <stop offset='0' stop-color='#502d16'/>
+                      <stop offset='1' stop-color='#2a170b'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-h'>
+                      <stop offset='0' stop-color='#fff'/>
+                      <stop offset='1' stop-color='#fff' stop-opacity='0'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-p'>
+                      <stop offset='0' stop-color='#fff'/>
+                      <stop offset='1' stop-color='#4a4a4a'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-k'>
+                      <stop offset='0' stop-color='#6b6b6b'/>
+                      <stop offset='.5' stop-color='#eee'/>
+                      <stop offset='1' stop-color='#6d6d6d' stop-opacity='.984'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-o'>
+                      <stop offset='0' stop-color='#fff'/>
+                      <stop offset='.617' stop-color='#979797' stop-opacity='.498'/>
+                      <stop offset='1' stop-color='#303030' stop-opacity='0'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-j'>
+                      <stop offset='0' stop-color='#6b6b6b'/>
+                      <stop offset='.5' stop-color='#b1b1b1'/>
+                      <stop offset='1' stop-color='#6d6d6d' stop-opacity='.984'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-l'>
+                      <stop offset='0' stop-color='#1a1a1a'/>
+                      <stop offset='1' stop-color='#1a1a1a' stop-opacity='0'/>
+                    </linearGradient>";
+                yield return @"
+                    <linearGradient id='battlefield-m'>
+                      <stop offset='0' stop-color='#686868'/>
+                      <stop offset='1' stop-color='#686868' stop-opacity='0'/>
+                    </linearGradient>";
+                yield return @"<radialGradient id='battlefield-v' cx='-184.381' cy='586.537' r='73.397' fx='-184.381' fy='586.537' gradientTransform='matrix(.9285 0 0 .91956 516.958 -12.554)' gradientUnits='userSpaceOnUse' xlink:href='#battlefield-d'/>";
+                yield return @"<radialGradient id='battlefield-x' cx='426.2' cy='518.42' r='29.133' fx='426.2' fy='518.42' gradientTransform='matrix(.9872 .68634 -.89224 1.28335 447.713 -373.275)' gradientUnits='userSpaceOnUse' xlink:href='#battlefield-e'/>";
+                yield return @"<filter id='battlefield-r'><feGaussianBlur stdDeviation='2.77'/></filter>";
+                yield return @"<filter id='battlefield-y'><feGaussianBlur stdDeviation='3.843'/></filter>";
+            }
+        }
+
         protected override string ElaborateSvg => $@"<g transform='translate({(IsCol ? RowCol : -1)}, {(IsCol ? -.9 : RowCol)}) scale(.001)'>
-            <linearGradient id='battlefield-e'>
-              <stop offset='0' stop-color='#fff'/>
-              <stop offset='1' stop-color='#fff' stop-opacity='0'/>
-            </linearGradient>
-            <linearGradient id='battlefield-d'>
-              <stop offset='0' stop-color='#fff'/>
-              <stop offset='.778' stop-color='#cbcbcb'/>
-              <stop offset='1' stop-color='#8c8c8c'/>
-            </linearGradient>
-            <linearGradient id='battlefield-a'>
-              <stop offset='0' stop-color='maroon'/>
-              <stop offset='.5' stop-color='#ff0c0c'/>
-              <stop offset='1' stop-color='maroon'/>
-            </linearGradient>
-            <linearGradient id='battlefield-b'>
-              <stop offset='0' stop-color='#898989'/>
-              <stop offset='.5' stop-color='#e6e6e6'/>
-              <stop offset='1' stop-color='#a4a4a4'/>
-            </linearGradient>
-            <linearGradient id='battlefield-q' x1='172.584' x2='508.164' y1='523.652' y2='527.761' gradientTransform='translate(0 -109.238)' gradientUnits='userSpaceOnUse' xlink:href='#battlefield-a'/>
-            <linearGradient id='battlefield-u' x1='156.148' x2='276.683' y1='615.423' y2='683.909' gradientTransform='matrix(1.00332 0 0 1 -4.184 -113.875)' gradientUnits='userSpaceOnUse' spreadMethod='reflect' xlink:href='#battlefield-b'/>
-            <linearGradient id='battlefield-s' x1='45.442' x2='330.588' y1='449.999' y2='533.551' gradientTransform='matrix(1 0 0 -1 -2.318 1035.857)' gradientUnits='userSpaceOnUse' spreadMethod='reflect' xlink:href='#battlefield-b'/>
-            <linearGradient id='battlefield-t' x1='166.405' x2='300.026' y1='707.505' y2='740.378' gradientTransform='matrix(1 0 0 -1 -2.318 1035.857)' gradientUnits='userSpaceOnUse' spreadMethod='reflect' xlink:href='#battlefield-b'/>
-            <linearGradient id='battlefield-c'>
-              <stop offset='0' stop-color='#696969'/>
-              <stop offset='.5' stop-color='#fff'/>
-              <stop offset='1' stop-color='#939393'/>
-            </linearGradient>
-            <linearGradient id='battlefield-w' x1='719.457' x2='803.146' y1='591.232' y2='638.464' gradientTransform='matrix(1.00332 0 0 1 -455.509 -74.515)' gradientUnits='userSpaceOnUse' spreadMethod='reflect' xlink:href='#battlefield-b'/>
-            <linearGradient id='battlefield-i'>
-              <stop offset='0' stop-color='#434343'/>
-              <stop offset='.5' stop-color='#fff'/>
-              <stop offset='1' stop-color='#5a5a5a'/>
-            </linearGradient>
-            <linearGradient id='battlefield-n'>
-              <stop offset='0' stop-color='#333'/>
-              <stop offset='1' stop-color='#cecece'/>
-            </linearGradient>
-            <linearGradient id='battlefield-f'>
-              <stop offset='0' stop-color='#fff'/>
-              <stop offset='.689' stop-color='#bfbfbf'/>
-              <stop offset='1' stop-color='#525252'/>
-            </linearGradient>
-            <linearGradient id='battlefield-g'>
-              <stop offset='0' stop-color='#502d16'/>
-              <stop offset='1' stop-color='#2a170b'/>
-            </linearGradient>
-            <linearGradient id='battlefield-h'>
-              <stop offset='0' stop-color='#fff'/>
-              <stop offset='1' stop-color='#fff' stop-opacity='0'/>
-            </linearGradient>
-            <linearGradient id='battlefield-p'>
-              <stop offset='0' stop-color='#fff'/>
-              <stop offset='1' stop-color='#4a4a4a'/>
-            </linearGradient>
-            <linearGradient id='battlefield-k'>
-              <stop offset='0' stop-color='#6b6b6b'/>
-              <stop offset='.5' stop-color='#eee'/>
-              <stop offset='1' stop-color='#6d6d6d' stop-opacity='.984'/>
-            </linearGradient>
-            <linearGradient id='battlefield-o'>
-              <stop offset='0' stop-color='#fff'/>
-              <stop offset='.617' stop-color='#979797' stop-opacity='.498'/>
-              <stop offset='1' stop-color='#303030' stop-opacity='0'/>
-            </linearGradient>
-            <linearGradient id='battlefield-j'>
-              <stop offset='0' stop-color='#6b6b6b'/>
-              <stop offset='.5' stop-color='#b1b1b1'/>
-              <stop offset='1' stop-color='#6d6d6d' stop-opacity='.984'/>
-            </linearGradient>
-            <linearGradient id='battlefield-l'>
-              <stop offset='0' stop-color='#1a1a1a'/>
-              <stop offset='1' stop-color='#1a1a1a' stop-opacity='0'/>
-            </linearGradient>
-            <linearGradient id='battlefield-m'>
-              <stop offset='0' stop-color='#686868'/>
-              <stop offset='1' stop-color='#686868' stop-opacity='0'/>
-            </linearGradient>
-            <radialGradient id='battlefield-v' cx='-184.381' cy='586.537' r='73.397' fx='-184.381' fy='586.537' gradientTransform='matrix(.9285 0 0 .91956 516.958 -12.554)' gradientUnits='userSpaceOnUse' xlink:href='#battlefield-d'/>
-            <radialGradient id='battlefield-x' cx='426.2' cy='518.42' r='29.133' fx='426.2' fy='518.42' gradientTransform='matrix(.9872 .68634 -.89224 1.28335 447.713 -373.275)' gradientUnits='userSpaceOnUse' xlink:href='#battlefield-e'/>
-            <filter id='battlefield-r'>
-              <feGaussianBlur stdDeviation='2.77'/>
-            </filter>
-            <filter id='battlefield-y'>
-              <feGaussianBlur stdDeviation='3.843'/>
-            </filter>
             <path fill='url(#battlefield-q)' fill-rule='evenodd' d='M149.438 305.168v217.375a20.5 20.5 0 012.28-.125h184.25v-217.25zm227.375 0v217.25h185.374v-217.25zm-227.375 261v83.719c0 54.151 49.214 113.965 105.187 158.531 27.987 22.284 56.622 40.622 78.281 53.188 1.078.625 2.037 1.165 3.063 1.75V566.293h-184.25a20.5 20.5 0 01-2.281-.125zm227.375.125v296.688c.648-.372 1.24-.71 1.906-1.094 21.617-12.505 50.228-30.832 78.218-53.156 55.981-44.65 105.25-104.699 105.25-158.844v-83.594z' overflow='visible' style='marker:none' transform='translate(0 -60)'/>
             <path fill='#500' fill-rule='evenodd' d='M151.222 303.968v213.904c.74-.084 1.496-.126 2.259-.126h3.187V309.45h177.229v-5.482zm225.112 0V521.75h5.445v-212.3h178.084v-5.483zm-225.112 261.64V649.534c0 42.673 30.122 88.84 69.922 128.346-37.082-38.256-64.477-82.15-64.477-122.864v-83.924c.74.084 1.496.125 2.259.125h176.97v-5.482H153.482c-.763 0-1.518-.041-2.259-.125zm225.112.126V863.15c.641-.372 1.228-.71 1.887-1.096 1.14-.668 2.379-1.43 3.558-2.13V571.215h178.084v-5.482z' filter='url(#battlefield-r)' overflow='visible' style='marker:none' transform='translate(0 -60)'/>
             <path fill='url(#battlefield-s)' fill-rule='evenodd' stroke='url(#battlefield-t)' stroke-width='4.623' d='M115.317 266.404c-1.297 0-2.344 1.15-2.344 2.563v376.281c0 145.099 234.728 261.528 240.5 261.906 5.76.378 240.531-116.807 240.531-261.906V268.967c0-1.413-1.078-2.563-2.375-2.563zm31.812 34.125H333.66v217.25H149.41a20.5 20.5 0 00-2.28.125zm227.375 0H559.88v217.25H374.504zm-227.375 261c.748.084 1.51.125 2.281.125h184.25v297.063c-1.025-.586-1.985-1.125-3.062-1.75-21.66-12.566-50.295-30.905-78.281-53.188-55.973-44.567-105.188-104.38-105.188-158.531v-49.406zm227.375.125H559.88v83.594c0 54.145-49.269 114.194-105.25 158.844-27.99 22.324-56.6 40.65-78.219 53.156-.665.385-1.258.722-1.906 1.094z' overflow='visible' style='marker:none' transform='translate(0 -60)'/>

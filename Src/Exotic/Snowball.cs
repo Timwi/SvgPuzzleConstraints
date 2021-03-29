@@ -68,7 +68,7 @@ namespace SvgPuzzleConstraints
 
                 for (var adj = 0; adj < 81; adj++)
                 {
-                    if (banned[adj] || adj % 9 + dx < 0 || adj % 9 + dx >= 9 || adj / 9 + dy < 0 || adj / 9 + dy >= 9 || !Orthogonal(adj).Any(a => sofar1[a]) || sudoku[adj] + offset != sudoku[adj + dx + 9 * dy])
+                    if (banned[adj] || adj % 9 + dx < 0 || adj % 9 + dx >= 9 || adj / 9 + dy < 0 || adj / 9 + dy >= 9 || !PuzzleUtil.Orthogonal(adj).Any(a => sofar1[a]) || sudoku[adj] + offset != sudoku[adj + dx + 9 * dy])
                         continue;
                     sofar1[adj] = true;
                     sofar2[adj + dx + 9 * dy] = true;

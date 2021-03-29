@@ -102,7 +102,7 @@ namespace SvgPuzzleConstraints
                 if (last == 9)
                     yield break;
                 var secondLast = sofar.Length == 1 ? 0 : sofar[sofar.Length - 2];
-                foreach (var adj in Adjacent(last))
+                foreach (var adj in PuzzleUtil.Adjacent(last))
                     if (!sofar.Contains(adj) && sudoku[adj] > sudoku[sofar[0]] && noDiagonalCrossingExists(last % 9, last / 9, adj % 9, adj / 9)
                         && (sofar.Length == 1 || isSmallTurn(secondLast % 9, secondLast / 9, last % 9, last / 9, adj % 9, adj / 9)))
                         foreach (var next in recurse(sofar.Insert(sofar.Length, adj)))

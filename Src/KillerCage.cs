@@ -45,7 +45,12 @@ namespace SvgPuzzleConstraints
             return Sum == null || Cells.Sum(c => grid[c]) == Sum.Value;
         }
 
-        public override bool ClashesWith(SvgConstraint other) => other is SvgRegionConstraint kc && kc.Cells.Intersect(Cells).Any();
+        public override bool ClashesWith(SvgConstraint other) => other switch
+        {
+            KillerCage kc => kc.Cells.Intersect(Cells).Any(),
+            BinairoCage bc => bc.Cells.Intersect(Cells).Any(),
+            _ => false
+        };
 
         public override string Svg => $"<path d='{GenerateSvgPath(Cells, .06, .06, Sum.NullOr(s => .275), Sum.NullOr(s => .25))}' {(Shaded ? "fill='rgba(0, 0, 0, .2)'" : "fill='none' stroke='black' stroke-width='.025' stroke-dasharray='.09,.07'")} />"
             + Sum.NullOr(s => $"<text x='{svgX(Cells.Min()) - .46}' y='{svgY(Cells.Min()) - .25}' text-anchor='start' font-size='.25'>{s}</text>");

@@ -10,8 +10,8 @@ namespace SvgPuzzleConstraints
     public class Sandwich : SvgRowColNumberConstraint
     {
         public override string Description => $"Within this {(IsCol ? "column" : "row")}, the digits sandwiched between the {Digit1} and the {Digit2} must add up to {Clue}. The {Digit1} and {Digit2} can occur in either order.";
-        public override double ExtraTop => IsCol ? .25 : 0;
-        public override double ExtraLeft => IsCol ? 0 : .5;
+        public override double ExtraTop => IsCol ? 0.9 : 0;
+        public override double ExtraLeft => IsCol ? 0 : 1.5;
         public override bool ShownTopLeft => true;
         public static readonly Example Example = new Example
         {

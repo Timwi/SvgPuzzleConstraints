@@ -97,7 +97,7 @@ namespace SvgPuzzleConstraints
                 }
 
                 var last = sofar.Last();
-                foreach (var adj in Adjacent(last))
+                foreach (var adj in PuzzleUtil.Adjacent(last))
                     if (!sofar.Contains(adj) && sumSofar + sudoku[adj] <= sudoku[sofar[0]] && noDiagonalCrossingExists(last % 9, last / 9, adj % 9, adj / 9))
                         foreach (var next in recurse(sofar.Insert(sofar.Length, adj), sumSofar + sudoku[adj]))
                             yield return next;
