@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using RT.Serialization;
 
 namespace SvgPuzzleConstraints
 {
@@ -22,7 +23,9 @@ namespace SvgPuzzleConstraints
         public DiagonalDirection Direction { get; private set; }
         public int Offset { get; private set; }
         public int Clue { get; private set; }
+        [ClassifyIgnoreIfDefault]
         public bool Opposite { get; private set; }
+        [ClassifyIgnoreIfDefault]
         public DiagonalDisplay Display { get; private set; }
 
         public SvgDiagonalConstraint(DiagonalDirection dir, int offset, int clue, bool opposite = false, DiagonalDisplay display = DiagonalDisplay.Default)

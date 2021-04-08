@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PuzzleSolvers;
+using RT.Serialization;
 using RT.Util;
 
 namespace SvgPuzzleConstraints
@@ -34,6 +35,7 @@ namespace SvgPuzzleConstraints
 
         public int Digit1 { get; private set; }
         public int Digit2 { get; private set; }
+        [ClassifyIgnoreIfDefault]
         public bool OmitCrust { get; private set; }
 
         protected override IEnumerable<Constraint> getConstraints() { yield return new SandwichUniquenessConstraint(Digit1, Digit2, Clue, Ut.NewArray(9, x => IsCol ? (RowCol + 9 * x) : (x + 9 * RowCol))); }
