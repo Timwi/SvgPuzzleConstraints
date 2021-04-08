@@ -191,7 +191,7 @@ namespace SvgPuzzleConstraints
                         else if (state[cap2].Value < curMin.Value)
                         {
                             // grid[cap1] must be > curMax
-                            state.MarkImpossible(cap1, v => v >= curMax);
+                            state.MarkImpossible(cap1, v => v <= curMax);
                         }
                         else
                             throw new InternalErrorException("CappedLineConstraint encountered an internal bug.");
