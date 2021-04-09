@@ -5,10 +5,9 @@ namespace SvgPuzzleConstraints
 {
     public abstract class SvgDiagonalConstraint : SvgConstraint
     {
-#warning Check these (consider Opposite)
-        public override double ExtraRight => Direction == DiagonalDirection.SouthWest ? .25 : 0;
-        public override double ExtraTop => Direction == DiagonalDirection.SouthEast ? .25 : 0;
-        public override double ExtraLeft => Direction == DiagonalDirection.NorthEast ? .25 : 0;
+        public override double ExtraRight => Direction == DiagonalDirection.SouthWest ? .5 : 0;
+        public override double ExtraTop => Direction == DiagonalDirection.SouthEast ? .5 : 0;
+        public override double ExtraLeft => Direction == DiagonalDirection.NorthEast ? .5 : 0;
 
         public override bool IncludesCell(int cell) => false;
         public override bool IncludesRowCol(bool isCol, int rowCol, bool topLeft) => Direction switch

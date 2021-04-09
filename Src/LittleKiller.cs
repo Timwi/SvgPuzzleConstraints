@@ -4,7 +4,6 @@ using PuzzleSolvers;
 
 namespace SvgPuzzleConstraints
 {
-#warning Fix Kyudosudoku database because the integer is now called “Clue” instead of “Sum”
     [SvgConstraintInfo("Diagonal sum")]
     public class LittleKiller : SvgDiagonalConstraint
     {

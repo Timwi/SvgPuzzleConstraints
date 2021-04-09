@@ -63,8 +63,9 @@ namespace SvgPuzzleConstraints
             {
                 if (state.LastPlacedCell == null)
                 {
-                    // The focus cell cannot be so large that it points outside the grid
-                    state.MarkImpossible(AffectedCells[0], v => v > AffectedCells.Length - 1);
+                    // The focus cell cannot be so large that it points outside the grid,
+                    // nor can it have a value that points at a cell that already contains something other than a 9
+                    state.MarkImpossible(AffectedCells[0], v => v > AffectedCells.Length - 1 || state.IsImpossible(AffectedCells[v], 9));
                 }
                 else if (state.LastPlacedCell == AffectedCells[0])
                 {
