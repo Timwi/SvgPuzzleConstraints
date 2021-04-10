@@ -39,13 +39,9 @@ namespace SvgPuzzleConstraints
             _ => false
         };
 
-        private enum Direction { Up, Right, Down, Left }
-        public override string Svg => $@"<g>
-            <pattern id='pattern-renban' width='2' height='2' patternTransform='rotate(45) scale(.35355) translate(.5, .5)' patternUnits='userSpaceOnUse'>
-                <path d='M0 0h1v1H0zM1 1h1v1H1z' />
-            </pattern>
-            <path d='{GenerateSvgPath(Cells, .25, .25)}' fill='url(#pattern-renban)' stroke='none' opacity='.2' />
-        </g>";
+        public override IEnumerable<string> SvgDefs => new[] { $@"<pattern id='pattern-renban' width='2' height='2' patternTransform='rotate(45) scale(.35355) translate(.5, .5)' patternUnits='userSpaceOnUse'><path d='M0 0h1v1H0zM1 1h1v1H1z' /></pattern>" };
+
+        public override string Svg => $@"<path d='{GenerateSvgPath(Cells, .25, .25)}' fill='url(#pattern-renban)' stroke='none' opacity='.2' />";
 
         public static IList<SvgConstraint> Generate(int[] sudoku, int[][] uniquenessRegions) => uniquenessRegions
             .Where(region => region.Length <= 7 && region.Select(c => sudoku[c]).Apply(numbers => numbers.Count(n => !numbers.Contains(n + 1)) == 1))

@@ -29,7 +29,7 @@ namespace SvgPuzzleConstraints
 
         public override string Svg => $@"<g opacity='.2'>
             <path d='M{Cells.Select(c => $"{c % 9 + .5} {c / 9 + .5}").JoinString(" ")}' stroke='black' stroke-width='.3' stroke-linecap='round' stroke-linejoin='round' fill='none' />
-            <circle cx='{Cells[0] % 9 + .5}' cy='{Cells[0] / 9 + .5}' r='.4' fill='black' />
+            <circle cx='{svgX(Cells[0])}' cy='{svgY(Cells[0])}' r='.4' fill='black' />
         </g>";
 
         public override bool Verify(int[] grid)

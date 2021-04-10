@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using PuzzleSolvers;
 using RT.Util;
 using RT.Util.ExtensionMethods;
@@ -27,27 +28,38 @@ namespace SvgPuzzleConstraints
 
         protected override IEnumerable<Constraint> getConstraints() { yield return new CappedLineConstraint(Cells[0], Cells[Cells.Length - 1], Cells.Skip(1).SkipLast(1).ToArray()); }
 
-        private static object _lockObject = new object();
-        private static int _svgIdCounter = 1;
+        private string path => $"M{Cells.Select(c => $"{svgX(c)} {svgY(c)}").JoinString(" ")}";
+        private string pathHash
+        {
+            get
+            {
+                using var md5 = MD5.Create();
+                return md5.ComputeHash(path.ToUtf8()).ToHex();
+            }
+        }
+
+        public override IEnumerable<string> SvgDefs
+        {
+            get
+            {
+                yield return $@"<mask id='capped-line-mask-{pathHash}'>
+                    <rect fill='white' x='0' y='0' width='9' height='9' stroke='none' />
+                    <path d='{path}' stroke='black' stroke-width='.1' stroke-linejoin='miter' fill='none' />
+                </mask>";
+            }
+        }
+
         public override string Svg
         {
             get
             {
-                var svgId = 0;
-                lock (_lockObject)
-                    svgId = _svgIdCounter++;
                 static int angleDeg(int c1, int c2) => (c2 % 9 - c1 % 9, c2 / 9 - c1 / 9) switch { (-1, -1) => 225, (0, -1) => 270, (1, -1) => 315, (-1, 0) => 180, (1, 0) => 0, (-1, 1) => 135, (0, 1) => 90, (1, 1) => 45, _ => 10 };
                 var f = Cells[0];
                 var s = Cells[1];
                 var sl = Cells[Cells.Length - 2];
                 var l = Cells[Cells.Length - 1];
-                var path = $"M{Cells.Select(c => $"{svgX(c)} {svgY(c)}").JoinString(" ")}";
                 return $@"<g opacity='.2'>
-                    <mask id='capped-line-mask-{svgId}'>
-                        <rect fill='white' x='0' y='0' width='9' height='9' stroke='none' />
-                        <path d='{path}' stroke='black' stroke-width='.1' stroke-linejoin='miter' fill='none' />
-                    </mask>
-                    <path d='M{Cells.Select(c => $"{svgX(c)} {svgY(c)}").JoinString(" ")}' stroke='black' stroke-width='.3' stroke-linejoin='miter' fill='none' mask='url(#capped-line-mask-{svgId})' />
+                    <path d='{path}' stroke='black' stroke-width='.3' stroke-linejoin='miter' fill='none' mask='url(#capped-line-mask-{pathHash})' />
                     <path d='M -.2 -.3 .4 0 -.2 .3z' fill='black' stroke='none' transform='translate({svgX(l)}, {svgY(l)}) rotate({angleDeg(sl, l)})' />
                     <path d='M -.2 -.3 .4 0 -.2 .3z' fill='black' stroke='none' transform='translate({svgX(f)}, {svgY(f)}) rotate({angleDeg(s, f)})' />
                 </g>";
