@@ -72,11 +72,19 @@ namespace SvgPuzzleConstraints
                     // The focus cell has been set, therefore place the 9 in the correct position
                     state.MustBe(AffectedCells[state.LastPlacedValue], 9);
                 }
-                else if (AffectedCells.Contains(state.LastPlacedCell.Value) && state.LastPlacedValue == 9)
+                else if (AffectedCells.Contains(state.LastPlacedCell.Value))
                 {
-                    // A 9 has been placed somewhere, therefore set the focus cell to the correct value
-                    // (This is the main difference with FindTheValueConstraint; it’s an optimization that assumes uniqueness)
-                    state.MustBe(AffectedCells[0], AffectedCells.IndexOf(state.LastPlacedCell.Value));
+                    if (state.LastPlacedValue == 9)
+                    {
+                        // A 9 has been placed somewhere, therefore set the focus cell to the correct value
+                        // (This is the main difference with FindTheValueConstraint; it’s an optimization that assumes uniqueness)
+                        state.MustBe(AffectedCells[0], AffectedCells.IndexOf(state.LastPlacedCell.Value));
+                    }
+                    else
+                    {
+                        // A value other than 9 has been placed somewhere, therefore the focus cell cannot point at it anymore
+                        state.MarkImpossible(AffectedCells[0], AffectedCells.IndexOf(state.LastPlacedCell.Value));
+                    }
                 }
 
                 return null;
