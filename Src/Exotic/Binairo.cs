@@ -2,18 +2,17 @@
 using System.Linq;
 using PuzzleSolvers;
 using RT.Util;
-using RT.Util.ExtensionMethods;
 
 namespace SvgPuzzleConstraints
 {
-    [SvgConstraintInfo("Binairo")]
+    [SvgConstraintInfo("Binairo row/column")]
     public class Binairo : SvgRowColConstraint
     {
         public override string Description => $"In this {(IsCol ? "column" : "row")}, no three adjacent digits can be all odd or all even.";
         public override bool ShownTopLeft => true;
         public override double ExtraTop => IsCol ? .5 : 0;
-        public override double ExtraLeft => IsCol ? 0 : .5;
-        public static readonly Example Example = new Example
+        public override double ExtraLeft => IsCol ? 0 : .75;
+        public static readonly Example Example = new()
         {
             Constraints = { new Binairo(false, 0) },
             Cells = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
