@@ -79,6 +79,12 @@ namespace SvgPuzzleConstraints
                 textY = outline[(offset + 1) % outline.Length].y + .25;
                 for (int j = 0; j <= outline.Length; j++)
                 {
+                    if (j == outline.Length && gapX == null && gapY == null)
+                    {
+                        path.Append("z");
+                        continue;
+                    }
+
                     var point1 = outline[(j + offset) % outline.Length];
                     var point2 = outline[(j + offset + 1) % outline.Length];
                     var point3 = outline[(j + offset + 2) % outline.Length];
