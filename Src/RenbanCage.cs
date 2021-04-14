@@ -10,7 +10,7 @@ namespace SvgPuzzleConstraints
     public class RenbanCage : SvgRegionConstraint
     {
         public override string Description => $"Digits within the cage must be different and form a consecutive set.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new RenbanCage(new[] { 0, 1, 2, 3, 10, 12 }) },
             Cells = { 0, 1, 2, 3, 10, 12 },
@@ -39,9 +39,9 @@ namespace SvgPuzzleConstraints
             _ => false
         };
 
-        public override IEnumerable<string> SvgDefs => new[] { $@"<pattern id='pattern-renban' width='2' height='2' patternTransform='rotate(45) scale(.35355) translate(.5, .5)' patternUnits='userSpaceOnUse'><path d='M0 0h1v1H0zM1 1h1v1H1z' /></pattern>" };
+        public override IEnumerable<string> SvgDefs => new[] { $@"<pattern id='renban-pattern' width='2' height='2' patternTransform='rotate(45) scale(.35355) translate(.5, .5)' patternUnits='userSpaceOnUse'><path d='M0 0h1v1H0zM1 1h1v1H1z' /></pattern>" };
 
-        public override string Svg => $@"<path d='{GenerateSvgPath(Cells, .25, .25)}' fill='url(#pattern-renban)' stroke='none' opacity='.2' />";
+        public override string Svg => $@"<path d='{GenerateSvgPath(Cells, .25, .25)}' fill='url(#renban-pattern)' stroke='none' opacity='.2' />";
 
         public static IList<SvgConstraint> Generate(int[] sudoku, int[][] uniquenessRegions) => uniquenessRegions
             .Where(region => region.Length <= 7 && region.Select(c => sudoku[c]).Apply(numbers => numbers.Count(n => !numbers.Contains(n + 1)) == 1))

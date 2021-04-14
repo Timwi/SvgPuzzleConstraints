@@ -13,8 +13,6 @@ namespace SvgPuzzleConstraints
     {
         public override string Description => $"Within this diagonal, there is exactly one {Digit1} and one {Digit2} and the digits sandwiched between them must add up to {Clue}. The {Digit1} and {Digit2} can occur in either order.";
 
-#warning Add Example
-
         public int Digit1 { get; private set; }
         public int Digit2 { get; private set; }
         [ClassifyIgnoreIfDefault]

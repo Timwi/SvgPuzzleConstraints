@@ -10,7 +10,7 @@ namespace SvgPuzzleConstraints
     public class AntiBishop : SvgCellConstraint
     {
         public override string Description => "The same digit can’t be on a diagonal (bishop’s move in chess) from this digit.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new AntiBishop(21) },
             Cells = { 1, 21 },

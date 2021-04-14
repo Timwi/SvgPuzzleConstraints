@@ -9,7 +9,7 @@ namespace SvgPuzzleConstraints
     public class AntiKing : SvgCellConstraint
     {
         public override string Description => "The same digit can’t be a king’s move away (orthogonally or diagonally adjacent) from this digit.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new AntiKing(20) },
             Cells = { 12, 20 },

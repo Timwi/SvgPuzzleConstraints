@@ -11,7 +11,7 @@ namespace SvgPuzzleConstraints
     public class Palindrome : SvgConstraint
     {
         public override string Description => "The digits along the line must form a palindrome (same sequence of digits when read from either end).";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new Palindrome(new[] { 19, 20, 12, 3 }) },
             Cells = { 19, 20, 12, 3 },

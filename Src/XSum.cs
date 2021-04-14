@@ -13,7 +13,7 @@ namespace SvgPuzzleConstraints
         public override double ExtraRight => !IsCol && Reverse ? .25 : 0;
         public override double ExtraLeft => !IsCol && !Reverse ? .5 : 0;
         public override bool ShownTopLeft => !Reverse;
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new XSum(false, 0, false, 19) },
             Cells = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },

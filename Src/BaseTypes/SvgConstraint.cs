@@ -39,7 +39,7 @@ namespace SvgPuzzleConstraints
 
         protected static double svgX(int cell) => cell % 9 + .5;
         protected static double svgY(int cell) => cell / 9 + .5;
-        protected static PointD svgP(int cell) => new PointD(svgX(cell), svgY(cell));
+        protected static PointD svgP(int cell) => new(svgX(cell), svgY(cell));
 
         private static (string name, Type type)[] _constraintsCache = null;
         public static (string name, Type type)[] Constraints => _constraintsCache ??= typeof(SvgConstraint).Assembly.GetTypes()

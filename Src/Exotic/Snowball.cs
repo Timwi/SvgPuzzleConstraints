@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using PuzzleSolvers;
 using RT.Util;
 using RT.Util.ExtensionMethods;
@@ -11,7 +11,7 @@ namespace SvgPuzzleConstraints
     public class Snowball : SvgConstraint
     {
         public override string Description => "One of the regions must contain the same digits in the same places as the other, plus or minus a consistent addend. For example, if one region contains 1, 4, 7, the other might contain 3, 6, 9 in the same order. (The digits within one region need not necessarily be different. The addend can be zero.)";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new Snowball(new[] { 0, 1, 9 }, new[] { 11, 12, 20 }) },
             Cells = { 0, 1, 9, 11, 12, 20 },
@@ -28,24 +28,33 @@ namespace SvgPuzzleConstraints
         protected override IEnumerable<Constraint> getConstraints() { yield return new OffsetCloneConstraint(Cells1, Cells2); }
         public sealed override bool IncludesCell(int cell) => Cells1.Contains(cell) || Cells2.Contains(cell);
 
-        private static int _svgIdCounter = 0;
-        private static readonly object _lockObject = new object();
+        private static string hash(string path)
+        {
+            using var md5 = MD5.Create();
+            return md5.ComputeHash(path.ToUtf8()).ToHex();
+        }
+
+        public override IEnumerable<string> SvgDefs
+        {
+            get
+            {
+                yield return "<filter id='snowball-filter' color-interpolation-filters='sRGB'><feGaussianBlur result='fbSourceGraphic' stdDeviation='.03' /></filter>";
+                var path1 = GenerateSvgPath(Cells1, 0, 0);
+                yield return $"<clipPath id='snowball-clip-{hash(path1)}' clipPathUnits='userSpaceOnUse'><path d='{path1}' /></clipPath>";
+                var path2 = GenerateSvgPath(Cells2, 0, 0);
+                yield return $"<clipPath id='snowball-clip-{hash(path2)}' clipPathUnits='userSpaceOnUse'><path d='{path2}' /></clipPath>";
+            }
+        }
+
         public override string Svg
         {
             get
             {
-                int id;
-                lock (_lockObject)
-                    id = _svgIdCounter = (_svgIdCounter + 1) % int.MaxValue;
-                return GenerateSvgPath(Cells1, 0, 0).Apply(path1 => GenerateSvgPath(Cells2, 0, 0).Apply(path2 => $@"
-                    <filter id='snowball-filter-a-{id}' color-interpolation-filters='sRGB'>
-                        <feGaussianBlur result='fbSourceGraphic' stdDeviation='.03' />
-                    </filter>
-                    <clipPath id='snowball-clip-a-{id}' clipPathUnits='userSpaceOnUse'><path d='{path1}' /></clipPath>
-                    <clipPath id='snowball-clip-b-{id}' clipPathUnits='userSpaceOnUse'><path d='{path2}' /></clipPath>
-                    <path d='{path1}' fill='none' stroke='#666' stroke-width='.08' filter='url(#snowball-filter-a-{id})' clip-path='url(#snowball-clip-a-{id})' />
-                    <path d='{path2}' fill='none' stroke='#666' stroke-width='.08' filter='url(#snowball-filter-a-{id})' clip-path='url(#snowball-clip-b-{id})' />
-                "));
+                var path1 = GenerateSvgPath(Cells1, 0, 0);
+                var path2 = GenerateSvgPath(Cells2, 0, 0);
+                return
+                    $"<path d='{path1}' fill='none' stroke='#666' stroke-width='.08' filter='url(#snowball-filter)' clip-path='url(#snowball-clip-{hash(path1)})' />" +
+                    $"<path d='{path2}' fill='none' stroke='#666' stroke-width='.08' filter='url(#snowball-filter)' clip-path='url(#snowball-clip-{hash(path2)})' />";
             }
         }
 

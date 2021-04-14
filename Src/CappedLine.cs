@@ -12,7 +12,7 @@ namespace SvgPuzzleConstraints
     public sealed class CappedLine : SvgConstraint
     {
         public override string Description => "The digits along the line must be numerically between the digits at the ends.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new CappedLine(new[] { 9, 19, 20, 12, 3 }) },
             Cells = { 9, 19, 20, 12, 3 },

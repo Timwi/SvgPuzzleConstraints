@@ -9,7 +9,7 @@ namespace SvgPuzzleConstraints
     {
         public override string Description => "The digits along the indicated diagonal must sum to the specified total. (The digits need not necessarily be different.)";
 
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new LittleKiller(DiagonalDirection.NorthEast, 7, 8) },
             Cells = { 1, 9 },

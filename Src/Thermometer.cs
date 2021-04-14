@@ -10,7 +10,7 @@ namespace SvgPuzzleConstraints
     public class Thermometer : SvgConstraint
     {
         public override string Description => "Digits must increase from the bulb.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new Thermometer(new[] { 18, 10, 20, 12, 3 }) },
             Cells = { 18, 10, 20, 12, 3 },

@@ -11,10 +11,10 @@ namespace SvgPuzzleConstraints
     public class Sandwich : SvgRowColNumberConstraint
     {
         public override string Description => $"Within this {(IsCol ? "column" : "row")}, the digits sandwiched between the {Digit1} and the {Digit2} must add up to {Clue}. The {Digit1} and {Digit2} can occur in either order.";
-        public override double ExtraTop => IsCol ? 0.9 : 0;
-        public override double ExtraLeft => IsCol ? 0 : 1.5;
+        public override double ExtraTop => IsCol ? OmitCrust ? .9 : .25 : 0;
+        public override double ExtraLeft => IsCol ? 0 : OmitCrust ? 1.5 : .75;
         public override bool ShownTopLeft => true;
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new Sandwich(false, 0, 3, 7, 17) },
             Cells = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
@@ -188,10 +188,10 @@ namespace SvgPuzzleConstraints
                 <g transform='translate({(IsCol ? RowCol + .5 : -1.15)}, {(IsCol ? -.95 : RowCol + .5)}) scale(.7)'>{_sandwichIcon}</g>
                 <text x='{(IsCol ? RowCol + .5 : -.4)}' y='{(IsCol ? -.15 : RowCol + .675)}' text-anchor='middle' font-size='.5'>{Clue}</text>"
             : $@"
-                <g transform='translate({(IsCol ? RowCol + .5 : -.95)}, {(IsCol ? -.8 : RowCol + .5)}) scale(.6)'>{_sandwichIcon}</g>
-                <text x='{(IsCol ? RowCol + .5 : -.325)}' y='{(IsCol ? -.15 : RowCol + .625)}' text-anchor='middle' font-size='.4'>{Clue}</text>
-                <text x='{(IsCol ? RowCol + .25 : -1.4)}' y='{(IsCol ? -1.05 : RowCol + .45)}' text-anchor='middle' font-size='.25'>{Digit1}</text>
-                <text x='{(IsCol ? RowCol + .75 : -1.4)}' y='{(IsCol ? -1.05 : RowCol + .7)}' text-anchor='middle' font-size='.25'>{Digit2}</text>";
+                <g transform='translate({(IsCol ? RowCol + .45 : -.575)}, {(IsCol ? -.35 : RowCol + .5)}) scale(.45)'>{_sandwichIcon}</g>
+                <text x='{(IsCol ? RowCol : -1.025) + .7}' y='{(IsCol ? -.85 : RowCol) + .57}' text-anchor='start' font-size='.23'>{Clue}</text>
+                <text x='{(IsCol ? RowCol : -1.025) + .2}' y='{(IsCol ? -.85 : RowCol) + .47}' text-anchor='end' font-size='.23'>{Digit1}</text>
+                <text x='{(IsCol ? RowCol : -1.025) + .2}' y='{(IsCol ? -.85 : RowCol) + .67}' text-anchor='end' font-size='.23'>{Digit2}</text>";
 
         public static IList<SvgConstraint> Generate(int[] sudoku)
         {
