@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PuzzleSolvers;
 using RT.Util;
@@ -67,23 +68,27 @@ namespace SvgPuzzleConstraints
                     // nor can it have a value that points at a cell that already contains something other than a 9
                     state.MarkImpossible(AffectedCells[0], v => v > AffectedCells.Length - 1 || state.IsImpossible(AffectedCells[v], 9));
                 }
-                else if (state.LastPlacedCell == AffectedCells[0])
+                else if (state.LastPlacedCell.Value == AffectedCells[0])
                 {
                     // The focus cell has been set, therefore place the 9 in the correct position
                     state.MustBe(AffectedCells[state.LastPlacedValue], 9);
+                    for (var i = 1; i < AffectedCells.Length; i++)
+                        if (i != state.LastPlacedValue)
+                            state.MarkImpossible(AffectedCells[i], 9);
                 }
                 else if (AffectedCells.Contains(state.LastPlacedCell.Value))
                 {
+                    var index = AffectedCells.IndexOf(state.LastPlacedCell.Value);
                     if (state.LastPlacedValue == 9)
                     {
                         // A 9 has been placed somewhere, therefore set the focus cell to the correct value
                         // (This is the main difference with FindTheValueConstraint; it’s an optimization that assumes uniqueness)
-                        state.MustBe(AffectedCells[0], AffectedCells.IndexOf(state.LastPlacedCell.Value));
+                        state.MustBe(AffectedCells[0], index);
                     }
                     else
                     {
                         // A value other than 9 has been placed somewhere, therefore the focus cell cannot point at it anymore
-                        state.MarkImpossible(AffectedCells[0], AffectedCells.IndexOf(state.LastPlacedCell.Value));
+                        state.MarkImpossible(AffectedCells[0], index);
                     }
                 }
 
