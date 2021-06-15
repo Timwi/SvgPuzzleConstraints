@@ -8,7 +8,7 @@ using RT.Util.ExtensionMethods;
 
 namespace SvgPuzzleConstraints
 {
-    [SvgConstraintInfo("Capped line")]
+    [SvgConstraintInfo("Between line")]
     public sealed class CappedLine : SvgConstraint
     {
         public override string Description => "The digits along the line must be numerically between the digits at the ends.";
@@ -28,40 +28,20 @@ namespace SvgPuzzleConstraints
 
         protected override IEnumerable<Constraint> getConstraints() { yield return new BetweenLineConstraint(Cells[0], Cells[Cells.Length - 1], Cells.Skip(1).SkipLast(1).ToArray()); }
 
-        private string path => $"M{Cells.Select(c => $"{svgX(c)} {svgY(c)}").JoinString(" ")}";
-        private string pathHash
-        {
-            get
-            {
-                using var md5 = MD5.Create();
-                return md5.ComputeHash(path.ToUtf8()).ToHex();
-            }
-        }
-
-        public override IEnumerable<string> SvgDefs
-        {
-            get
-            {
-                yield return $@"<mask id='capped-line-mask-{pathHash}'>
-                    <rect fill='white' x='0' y='0' width='9' height='9' stroke='none' />
-                    <path d='{path}' stroke='black' stroke-width='.1' stroke-linejoin='miter' fill='none' />
-                </mask>";
-            }
-        }
-
         public override string Svg
         {
             get
             {
                 static int angleDeg(int c1, int c2) => (c2 % 9 - c1 % 9, c2 / 9 - c1 / 9) switch { (-1, -1) => 225, (0, -1) => 270, (1, -1) => 315, (-1, 0) => 180, (1, 0) => 0, (-1, 1) => 135, (0, 1) => 90, (1, 1) => 45, _ => 10 };
+                static double angle(int c1, int c2) => angleDeg(c1, c2) * Math.PI / 180;
                 var f = Cells[0];
                 var s = Cells[1];
                 var sl = Cells[Cells.Length - 2];
                 var l = Cells[Cells.Length - 1];
                 return $@"<g opacity='.2'>
-                    <path d='{path}' stroke='black' stroke-width='.3' stroke-linejoin='miter' fill='none' mask='url(#capped-line-mask-{pathHash})' />
-                    <path d='M -.2 -.3 .4 0 -.2 .3z' fill='black' stroke='none' transform='translate({svgX(l)}, {svgY(l)}) rotate({angleDeg(sl, l)})' />
-                    <path d='M -.2 -.3 .4 0 -.2 .3z' fill='black' stroke='none' transform='translate({svgX(f)}, {svgY(f)}) rotate({angleDeg(s, f)})' />
+                    <circle cx='{svgX(f)}' cy='{svgY(f)}' r='.4' fill='none' stroke='black' stroke-width='.05' />
+                    <circle cx='{svgX(l)}' cy='{svgY(l)}' r='.4' fill='none' stroke='black' stroke-width='.05' />
+                    <path fill='none' stroke='black' stroke-width='.05' d='M{svgX(f) + .4 * Math.Cos(angle(f, s))} {svgY(f) + .4 * Math.Sin(angle(f, s))} {Cells.Skip(1).SkipLast(1).Select(c => $"{svgX(c)} {svgY(c)}").JoinString(" ")} {svgX(l) - .4 * Math.Cos(angle(sl, l))} {svgY(l) - .4 * Math.Sin(angle(sl, l))}' />
                 </g>";
             }
         }

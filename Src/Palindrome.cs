@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using PuzzleSolvers;
 using RT.Util;
 using RT.Util.ExtensionMethods;
@@ -28,10 +29,43 @@ namespace SvgPuzzleConstraints
         protected override IEnumerable<Constraint> getConstraints() { yield return new CloneConstraint(Cells.Subarray(0, Cells.Length / 2), Cells.Subarray((Cells.Length + 1) / 2).ReverseInplace()); }
         public sealed override bool IncludesCell(int cell) => Cells.Contains(cell);
 
-        public override string Svg => $@"<g opacity='.2'>
-            <path d='M{Cells.Select(c => $"{svgX(c)} {svgY(c)}").JoinString(" ")}' stroke='black' stroke-width='.2' stroke-linecap='square' stroke-linejoin='bevel' fill='none' />
-            {(Cells.Length % 2 == 1 ? svgP(Cells[Cells.Length / 2]) : (svgP(Cells[Cells.Length / 2 - 1]) + svgP(Cells[Cells.Length / 2])) / 2).Apply(p => $"<path d='M -.4 0 0 -.4 .4 0 0 .4 z' transform='translate({p.X}, {p.Y})' fill='black'/>")}
-        </g>";
+        private string path => $"M{Cells.Select(c => $"{svgX(c)} {svgY(c)}").JoinString(" ")}";
+        private string pathHash
+        {
+            get
+            {
+                using var md5 = MD5.Create();
+                return md5.ComputeHash(path.ToUtf8()).ToHex();
+            }
+        }
+
+        public override IEnumerable<string> SvgDefs
+        {
+            get
+            {
+                yield return $@"<mask id='capped-line-mask-{pathHash}'>
+                    <rect fill='white' x='0' y='0' width='9' height='9' stroke='none' />
+                    <path d='{path}' stroke='black' stroke-width='.1' stroke-linejoin='miter' fill='none' />
+                </mask>";
+            }
+        }
+
+        public override string Svg
+        {
+            get
+            {
+                static int angleDeg(int c1, int c2) => (c2 % 9 - c1 % 9, c2 / 9 - c1 / 9) switch { (-1, -1) => 225, (0, -1) => 270, (1, -1) => 315, (-1, 0) => 180, (1, 0) => 0, (-1, 1) => 135, (0, 1) => 90, (1, 1) => 45, _ => 10 };
+                var f = Cells[0];
+                var s = Cells[1];
+                var sl = Cells[Cells.Length - 2];
+                var l = Cells[Cells.Length - 1];
+                return $@"<g opacity='.2'>
+                    <path d='{path}' stroke='black' stroke-width='.3' stroke-linejoin='miter' fill='none' mask='url(#capped-line-mask-{pathHash})' />
+                    <path d='M -.2 -.3 .4 0 -.2 .3z' fill='black' stroke='none' transform='translate({svgX(l)}, {svgY(l)}) rotate({angleDeg(sl, l)})' />
+                    <path d='M -.2 -.3 .4 0 -.2 .3z' fill='black' stroke='none' transform='translate({svgX(f)}, {svgY(f)}) rotate({angleDeg(s, f)})' />
+                </g>";
+            }
+        }
 
         public override bool Verify(int[] grid)
         {

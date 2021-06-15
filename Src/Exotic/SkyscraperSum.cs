@@ -5,10 +5,10 @@ using RT.Util;
 
 namespace SvgPuzzleConstraints
 {
-    [SvgConstraintInfo("Skyscraper")]
-    public class Skyscraper : SvgRowColNumberConstraint
+    [SvgConstraintInfo("Skyscraper Sum")]
+    public class SkyscraperSum : SvgRowColNumberConstraint
     {
-        public override string Description => $"Within this {(IsCol ? "column" : "row")}, the digits represent skyscrapers, where taller ones obstruct the view of smaller ones behind them. {Clue} skyscrapers are visible from the clue.";
+        public override string Description => $"Within this {(IsCol ? "column" : "row")}, the digits represent skyscrapers, where taller ones obstruct the view of smaller ones behind them. The heights of the skyscrapers visible from the clue sum up to {Clue}.";
         public override double ExtraTop => IsCol && !Reverse ? .5 : 0;
         public override double ExtraRight => !IsCol && Reverse ? .8 : 0;
         public override double ExtraLeft => !IsCol && !Reverse ? .8 : 0;
@@ -23,15 +23,15 @@ namespace SvgPuzzleConstraints
             Wide = true
         };
 
-        public Skyscraper(bool isCol, int rowCol, bool reverse, int clue, RowColDisplay display = RowColDisplay.Default)
+        public SkyscraperSum(bool isCol, int rowCol, bool reverse, int clue, RowColDisplay display = RowColDisplay.Default)
             : base(isCol, rowCol, clue, display) { Reverse = reverse; }
-        private Skyscraper() { }    // for Classify
+        private SkyscraperSum() { }    // for Classify
 
         public bool Reverse { get; private set; }
 
         protected override IEnumerable<Constraint> getConstraints() { yield return new SkyscraperUniquenessConstraint(Clue, GetAffectedCells(Reverse)); }
 
-        public override bool Verify(int[] grid) => SkyscraperUniquenessConstraint.CalculateSkyscraperClue(GetAffectedCells(Reverse).Select(cell => grid[cell])) == Clue;
+        public override bool Verify(int[] grid) => SkyscraperSumUniquenessConstraint.CalculateSkyscraperSumClue(GetAffectedCells(Reverse).Select(cell => grid[cell])) == Clue;
 
         public override IEnumerable<string> SvgDefs
         {
@@ -56,6 +56,7 @@ namespace SvgPuzzleConstraints
                 <path fill='none' stroke='#D5F6FF' stroke-width='.5' d='M52 90V9m10 81V.357M53.333 90V7.667M66.667 90V2.024M54.667 90V6.333M71.333 90V3.69M56 90V5m20 85V5.357M57.333 90V3.667M80.667 90V7.024M58.667 90V2.333M85.333 90V8.69M60 90V1' mask='url(#skyscraper-1)'/>
                 <path fill='#208531' stroke='#325722' stroke-width='.75' d='M26.11 87.19c-2.27-.26-4.79-.44-7.48-.44-9.67 0-17.53 1.92-17.53 4.28 0 2.36 7.86 4.28 17.53 4.28 2.41 0 6.86-.31 6.86-.31 4.78 1.92 13.13 3.15 22.62 3.15 5.56 0 11.88-.59 16.16-1.34 4.46 1.41 7.78 2.11 13.82 2.09 11.49-.02 20.85-2.88 20.85-6.43 0-3.54-9.35-6.43-20.85-6.43-3.41 0-6.59.24-9.44.69-4.92-1.52-12.24-2.46-20.94-2.46-8.69 0-16.74 1.1-21.61 2.9z'/>
             </g>
+            <text x='.4' y='.55' font-size='.45' fill='black' stroke='white' stroke-width='.05' paint-order='stroke'>Σ</text>
             <text x='.8' y='.55' font-size='.45'>{Clue}</text>
         </g>";
 
@@ -65,7 +66,7 @@ namespace SvgPuzzleConstraints
             foreach (var isCol in new[] { false, true })
                 foreach (var reverse in new[] { false, true })
                     for (var rowCol = 0; rowCol < 9; rowCol++)
-                        constraints.Add(new Skyscraper(isCol, rowCol, reverse, SkyscraperUniquenessConstraint.CalculateSkyscraperClue(Ut.NewArray(9, x => sudoku[isCol ? (rowCol + 9 * (reverse ? 8 - x : x)) : ((reverse ? 8 - x : x) + 9 * rowCol)]))));
+                        constraints.Add(new SkyscraperSum(isCol, rowCol, reverse, SkyscraperSumUniquenessConstraint.CalculateSkyscraperSumClue(Ut.NewArray(9, x => sudoku[isCol ? (rowCol + 9 * (reverse ? 8 - x : x)) : ((reverse ? 8 - x : x) + 9 * rowCol)]))));
             return constraints;
         }
     }
