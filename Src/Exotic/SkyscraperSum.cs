@@ -15,11 +15,11 @@ namespace SvgPuzzleConstraints
         public override bool ShownTopLeft => !Reverse;
         public static readonly Example Example = new()
         {
-            Constraints = { new Skyscraper(false, 0, false, 3) },
+            Constraints = { new SkyscraperSum(false, 0, false, 38) },
             Cells = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },
-            Good = { 2, 7, 5, 9, 6, 1, 4, 3, 8 },
-            Bad = { 2, 7, 8, 5, 9, 6, 1, 4, 3 },
-            Reason = "The 8 obstructs the 5, and the 9 obstructs the rest of the row, leaving 4 skyscrapers visible (2, 7, 8, 9).",
+            Good = { 3, 5, 6, 4, 7, 2, 8, 9, 1 },
+            Bad = { 4, 1, 6, 5, 2, 7, 3, 8, 9 },
+            Reason = "The obstructed skyscrapers are 1, 5, 2, and 3. The rest sum up to 4+6+7+8+9 = 34.",
             Wide = true
         };
 
@@ -29,7 +29,7 @@ namespace SvgPuzzleConstraints
 
         public bool Reverse { get; private set; }
 
-        protected override IEnumerable<Constraint> getConstraints() { yield return new SkyscraperUniquenessConstraint(Clue, GetAffectedCells(Reverse)); }
+        protected override IEnumerable<Constraint> getConstraints() { yield return new SkyscraperSumUniquenessConstraint(Clue, GetAffectedCells(Reverse)); }
 
         public override bool Verify(int[] grid) => SkyscraperSumUniquenessConstraint.CalculateSkyscraperSumClue(GetAffectedCells(Reverse).Select(cell => grid[cell])) == Clue;
 
@@ -56,8 +56,8 @@ namespace SvgPuzzleConstraints
                 <path fill='none' stroke='#D5F6FF' stroke-width='.5' d='M52 90V9m10 81V.357M53.333 90V7.667M66.667 90V2.024M54.667 90V6.333M71.333 90V3.69M56 90V5m20 85V5.357M57.333 90V3.667M80.667 90V7.024M58.667 90V2.333M85.333 90V8.69M60 90V1' mask='url(#skyscraper-1)'/>
                 <path fill='#208531' stroke='#325722' stroke-width='.75' d='M26.11 87.19c-2.27-.26-4.79-.44-7.48-.44-9.67 0-17.53 1.92-17.53 4.28 0 2.36 7.86 4.28 17.53 4.28 2.41 0 6.86-.31 6.86-.31 4.78 1.92 13.13 3.15 22.62 3.15 5.56 0 11.88-.59 16.16-1.34 4.46 1.41 7.78 2.11 13.82 2.09 11.49-.02 20.85-2.88 20.85-6.43 0-3.54-9.35-6.43-20.85-6.43-3.41 0-6.59.24-9.44.69-4.92-1.52-12.24-2.46-20.94-2.46-8.69 0-16.74 1.1-21.61 2.9z'/>
             </g>
-            <text x='.4' y='.55' font-size='.45' fill='black' stroke='white' stroke-width='.05' paint-order='stroke'>Σ</text>
-            <text x='.8' y='.55' font-size='.45'>{Clue}</text>
+            <text x='.35' y='.55' font-size='.45' fill='black' stroke='white' stroke-width='.04' paint-order='stroke'>Σ</text>
+            <text x='.8' y='.5' font-size='.3'>{Clue}</text>
         </g>";
 
         public static IList<SvgConstraint> Generate(int[] sudoku)
