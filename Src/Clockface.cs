@@ -11,8 +11,8 @@ namespace SvgPuzzleConstraints
         {
             Constraints = { new Clockface(0, true), new Clockface(11, false) },
             Cells = { 0, 1, 10, 9, 11, 12, 21, 20 },
-            Good = { 3, 5, 8, 9, 2, 8, 7, 3 },
-            Bad = { 3, 7, 5, 9, 2, 4, 6, 3 }
+            Good = { 3, 5, 8, 9, 2, 8, 7, 4 },
+            Bad = { 3, 7, 5, 9, 2, 3, 6, 4 }
         };
         
         public bool Clockwise { get; private set; }
