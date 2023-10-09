@@ -91,8 +91,6 @@ namespace SvgPuzzleConstraints
                 }
 
                 var last = sofar[sofar.Length - 1];
-                if (last == 9)
-                    yield break;
                 var secondLast = sofar.Length == 1 ? 0 : sofar[sofar.Length - 2];
                 foreach (var adj in PuzzleUtil.Adjacent(last))
                     if (!sofar.Contains(adj) && sudoku[adj] > sudoku[sofar[0]] && noDiagonalCrossingExists(last % 9, last / 9, adj % 9, adj / 9)
