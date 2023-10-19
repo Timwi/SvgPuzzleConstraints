@@ -11,7 +11,7 @@ namespace SvgPuzzleConstraints
     [SvgConstraintInfo("Means")]
     public class Means : SvgCellConstraint
     {
-        public override string Description => $"Consider all three-cell lines going through this cell. Exactly {NumArithmetic} of these must have the center cell be the arithmetic mean ((a+b)/2) of the flanking cells, and exactly {NumGeometric} of them the geometric mean (√(ab)).";
+        public override string Description => $"Consider all three-cell lines centered on this cell. Exactly {NumArithmetic} of these must have the center cell be the arithmetic mean ((a+b)/2) of the flanking cells, and exactly {NumGeometric} of them the geometric mean (√(ab)).";
         public static readonly Example Example = new Example
         {
             Constraints = { new Means(11, 1, 1) },
