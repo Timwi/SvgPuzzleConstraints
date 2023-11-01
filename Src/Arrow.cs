@@ -76,7 +76,10 @@ namespace SvgPuzzleConstraints
         public override bool ClashesWith(SvgConstraint other) => other switch
         {
             SvgCellConstraint cc => Cells[0] == cc.Cell,
-            Thermometer th => Cells[0] == th.Cells[0],
+            Thermometer th => Cells.Intersect(th.Cells).Any(),
+            Palindrome pali => Cells.Intersect(pali.Cells).Any(),
+            GermanWhisper gw => Cells.Intersect(gw.Cells).Any(),
+            Arrow ar => Cells.Intersect(ar.Cells).Any(),
             _ => false,
         };
 

@@ -79,6 +79,7 @@ namespace SvgPuzzleConstraints
             Thermometer th => Cells.Intersect(th.Cells).Any(),
             Palindrome pali => Cells.Intersect(pali.Cells).Any(),
             GermanWhisper gw => Cells.Intersect(gw.Cells).Any(),
+            Arrow ar => Cells.Intersect(ar.Cells).Any(),
             _ => false,
         };
 
