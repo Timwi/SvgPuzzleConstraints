@@ -7,7 +7,7 @@ namespace SvgPuzzleConstraints
     public class Battenburg : SvgFourCellConstraint
     {
         public override string Description => "The four cells around the clue must form a 2×2 checkerboard of odd and even digits.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new Battenburg(2) },
             Cells = { 2, 3, 12, 11 },
@@ -25,6 +25,6 @@ namespace SvgPuzzleConstraints
         protected override bool verify(int a, int b, int c, int d) => myVerify(a, b, c, d);
         private static bool myVerify(int a, int b, int c, int d) => a % 2 != b % 2 && b % 2 != c % 2 && c % 2 != d % 2;
 
-        public static IList<SvgConstraint> Generate(int[] sudoku) => generate(sudoku, (cell, a, b, c, d) => myVerify(a, b, c, d) ? new[] { new Battenburg(cell) } : Enumerable.Empty<SvgConstraint>());
+        public static IList<SvgConstraint> Generate(int[] sudoku) => generate(sudoku, (cell, a, b, c, d) => myVerify(a, b, c, d) ? [new Battenburg(cell)] : []);
     }
 }

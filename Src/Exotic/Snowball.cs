@@ -13,7 +13,7 @@ namespace SvgPuzzleConstraints
         public override string Description => "One of the regions must contain the same digits in the same places as the other, plus or minus a consistent addend. For example, if one region contains 1, 4, 7, the other might contain 3, 6, 9 in the same order. (The digits within one region need not necessarily be different. The addend can be zero.)";
         public static readonly Example Example = new()
         {
-            Constraints = { new Snowball(new[] { 0, 1, 9 }, new[] { 11, 12, 20 }) },
+            Constraints = { new Snowball([0, 1, 9], [11, 12, 20]) },
             Cells = { 0, 1, 9, 11, 12, 20 },
             Good = { 1, 4, 7, 3, 6, 9 },
             Bad = { 1, 4, 7, 3, 5, 8 },

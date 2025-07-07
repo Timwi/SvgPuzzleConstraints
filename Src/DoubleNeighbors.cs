@@ -6,7 +6,7 @@ namespace SvgPuzzleConstraints
     public class DoubleNeighbors : SvgNeighborConstraint
     {
         public override string Description => "The two marked cells must have a ratio of 2 (one is double the other).";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new DoubleNeighbors(10, 11) },
             Cells = { 10, 11 },

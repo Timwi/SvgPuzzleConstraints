@@ -14,7 +14,7 @@ namespace SvgPuzzleConstraints
         public override string Description => "The digits along the line must form a palindrome (same sequence of digits when read from either end).";
         public static readonly Example Example = new()
         {
-            Constraints = { new Palindrome(new[] { 19, 20, 12, 3 }) },
+            Constraints = { new Palindrome([19, 20, 12, 3]) },
             Cells = { 19, 20, 12, 3 },
             Good = { 5, 2, 2, 5 },
             Bad = { 5, 2, 2, 1 },
@@ -113,7 +113,7 @@ namespace SvgPuzzleConstraints
             }
 
             for (var startCell = 0; startCell < 81; startCell++)
-                list.AddRange(recurse(new[] { startCell }, new[] { startCell }));
+                list.AddRange(recurse([startCell], [startCell]));
             return list;
         }
     }

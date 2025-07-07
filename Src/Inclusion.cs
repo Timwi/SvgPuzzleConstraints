@@ -10,9 +10,9 @@ namespace SvgPuzzleConstraints
     public class Inclusion : SvgFourCellConstraint, IEquatable<Inclusion>
     {
         public override string Description => $"The four cells around the circle must contain the {(Digits.Length == 1 ? $"digit {Digits[0]}" : $"digits {(Digits.JoinString(", ", lastSeparator: " and "))} in some order")}.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
-            Constraints = { new Inclusion(2, new[] { 3, 3, 7 }) },
+            Constraints = { new Inclusion(2, [3, 3, 7]) },
             Cells = { 2, 3, 12, 11 },
             Good = { 3, 5, 3, 7 },
             Bad = { 3, 5, 8, 7 },
@@ -40,21 +40,21 @@ namespace SvgPuzzleConstraints
         }
 
         public static IList<SvgConstraint> Generate(int[] sudoku) => generate(sudoku, (cell, a, b, c, d) => Ut.NewArray(
-            new Inclusion(cell, new[] { a }),
-            new Inclusion(cell, new[] { b }),
-            new Inclusion(cell, new[] { c }),
-            new Inclusion(cell, new[] { d }),
-            new Inclusion(cell, new[] { a, b }),
-            new Inclusion(cell, new[] { a, c }),
-            new Inclusion(cell, new[] { a, d }),
-            new Inclusion(cell, new[] { b, c }),
-            new Inclusion(cell, new[] { b, d }),
-            new Inclusion(cell, new[] { c, d }),
-            new Inclusion(cell, new[] { a, b, c }),
-            new Inclusion(cell, new[] { a, b, d }),
-            new Inclusion(cell, new[] { a, c, d }),
-            new Inclusion(cell, new[] { b, c, d }),
-            new Inclusion(cell, new[] { a, b, c, d })
+            new Inclusion(cell, [a]),
+            new Inclusion(cell, [b]),
+            new Inclusion(cell, [c]),
+            new Inclusion(cell, [d]),
+            new Inclusion(cell, [a, b]),
+            new Inclusion(cell, [a, c]),
+            new Inclusion(cell, [a, d]),
+            new Inclusion(cell, [b, c]),
+            new Inclusion(cell, [b, d]),
+            new Inclusion(cell, [c, d]),
+            new Inclusion(cell, [a, b, c]),
+            new Inclusion(cell, [a, b, d]),
+            new Inclusion(cell, [a, c, d]),
+            new Inclusion(cell, [b, c, d]),
+            new Inclusion(cell, [a, b, c, d])
         ).Distinct());
 
         public bool Equals(Inclusion other) => other.TopLeftCell == TopLeftCell && other.Digits.SequenceEqual(Digits);

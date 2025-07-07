@@ -12,7 +12,7 @@ namespace SvgPuzzleConstraints
     {
         public override string Description => "The digit in this cell indicates how far in the indicated direction the 9 is.";
 
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new FindThe9(9, CellDirection.Right) },
             Cells = { 9, 12 },
@@ -46,11 +46,10 @@ namespace SvgPuzzleConstraints
                 .Select(dir => new FindThe9(c, dir)))
             .ToArray();
 
-        sealed class FindThe9Constraint : Constraint
+        sealed class FindThe9Constraint(int cell, CellDirection dir) : Constraint(findAffectedCells(cell, dir))
         {
-            public int Cell { get; private set; }
-            public CellDirection Direction { get; private set; }
-            public FindThe9Constraint(int cell, CellDirection dir) : base(findAffectedCells(cell, dir)) { Cell = cell; Direction = dir; }
+            public int Cell { get; private set; } = cell;
+            public CellDirection Direction { get; private set; } = dir;
 
             private static IEnumerable<int> findAffectedCells(int cell, CellDirection dir)
             {

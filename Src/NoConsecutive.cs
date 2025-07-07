@@ -10,7 +10,7 @@ namespace SvgPuzzleConstraints
     public class NoConsecutive : SvgCellConstraint
     {
         public override string Description => "A digit that’s 1 more or 1 less than this digit can’t be orthogonally adjacent to it.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new NoConsecutive(20) },
             Cells = { 11, 20 },
@@ -22,7 +22,7 @@ namespace SvgPuzzleConstraints
         public NoConsecutive(int cell) : base(cell) { }
         private NoConsecutive() { }    // for Classify
 
-        protected override IEnumerable<Constraint> getConstraints() { yield return new NoConsecutiveConstraint(9, 9, includeDiagonals: false, enforcedCells: new[] { Cell }); }
+        protected override IEnumerable<Constraint> getConstraints() { yield return new NoConsecutiveConstraint(9, 9, includeDiagonals: false, enforcedCells: [Cell]); }
         public override string Svg => $"<path transform='translate({Cell % 9}, {Cell / 9})' d='m 0 .5 .1 -.1 .1 .1 -.1 .1z M .4 .1 l .1 -.1 .1 .1 -.1 .1z M .8 .5 l .1 -.1 .1 .1 -.1 .1z M .4 .9 l .1 -.1 .1 .1 -.1 .1z' opacity='.2' />";
 
         public override bool Verify(int[] grid)

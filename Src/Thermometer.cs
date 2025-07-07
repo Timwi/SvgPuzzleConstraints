@@ -12,7 +12,7 @@ namespace SvgPuzzleConstraints
         public override string Description => "Digits must increase from the bulb.";
         public static readonly Example Example = new()
         {
-            Constraints = { new Thermometer(new[] { 18, 10, 20, 12, 3 }) },
+            Constraints = { new Thermometer([18, 10, 20, 12, 3]) },
             Cells = { 18, 10, 20, 12, 3 },
             Good = { 2, 4, 7, 8, 9 },
             Bad = { 2, 7, 4, 8, 9 },
@@ -78,7 +78,7 @@ namespace SvgPuzzleConstraints
             }
 
             for (var startCell = 0; startCell < 81; startCell++)
-                list.AddRange(recurse(new[] { startCell }));
+                list.AddRange(recurse([startCell]));
             return list;
         }
     }

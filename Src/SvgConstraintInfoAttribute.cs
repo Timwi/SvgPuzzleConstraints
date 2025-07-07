@@ -3,9 +3,8 @@
 namespace SvgPuzzleConstraints
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    sealed class SvgConstraintInfoAttribute : Attribute
+    sealed class SvgConstraintInfoAttribute(string name) : Attribute
     {
-        public string Name { get; private set; }
-        public SvgConstraintInfoAttribute(string name) { Name = name; }
+        public string Name { get; private set; } = name;
     }
 }

@@ -12,7 +12,7 @@ namespace SvgPuzzleConstraints
         public override double ExtraTop => IsCol ? .5 : 0;
         public override double ExtraLeft => IsCol ? 0 : .75;
         public override bool ShownTopLeft => true;
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new Battlefield(false, 0, 20) },
             Cells = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },

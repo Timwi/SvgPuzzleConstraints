@@ -12,7 +12,7 @@ namespace SvgPuzzleConstraints
     public class Means : SvgCellConstraint
     {
         public override string Description => $"Consider all three-cell lines centered on this cell. Exactly {NumArithmetic} of these must have the center cell be the arithmetic mean ((a+b)/2) of the flanking cells, and exactly {NumGeometric} of them the geometric mean (√(ab)).";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new Means(11, 1, 1) },
             Cells = { 1, 2, 3, 10, 11, 12, 19, 20, 21 },
@@ -93,11 +93,11 @@ namespace SvgPuzzleConstraints
             return (numArith, numGeom);
         }
 
-        private static int[][] getTriplets(int centerCell) => Ut.NewArray(
-            new[] { centerCell - 10, centerCell, centerCell + 10 },
-            new[] { centerCell - 9, centerCell, centerCell + 9 },
-            new[] { centerCell - 8, centerCell, centerCell + 8 },
-            new[] { centerCell - 1, centerCell, centerCell + 1 });
+        private static int[][] getTriplets(int centerCell) => Ut.NewArray<int[]>(
+            [centerCell - 10, centerCell, centerCell + 10],
+            [centerCell - 9, centerCell, centerCell + 9],
+            [centerCell - 8, centerCell, centerCell + 8],
+            [centerCell - 1, centerCell, centerCell + 1]);
 
         public static IList<SvgConstraint> Generate(int[] sudoku) => Enumerable.Range(0, 81).Where(c => c % 9 != 0 && c % 9 != 8 && c / 9 != 0 && c / 9 != 8)
             .Select(c => (cell: c, inf: countArithGeom(sudoku, c)))

@@ -14,7 +14,7 @@ namespace SvgPuzzleConstraints
         public override string Description => "The digits along the line must be numerically between the digits at the ends.";
         public static readonly Example Example = new()
         {
-            Constraints = { new CappedLine(new[] { 9, 19, 20, 12, 3 }) },
+            Constraints = { new CappedLine([9, 19, 20, 12, 3]) },
             Cells = { 9, 19, 20, 12, 3 },
             Good = { 2, 5, 7, 3, 8 },
             Bad = { 3, 5, 7, 2, 8 },
@@ -100,7 +100,7 @@ namespace SvgPuzzleConstraints
             }
 
             for (var startCell = 0; startCell < 81; startCell++)
-                list.AddRange(recurse(new[] { startCell }));
+                list.AddRange(recurse([startCell]));
             return list;
         }
     }

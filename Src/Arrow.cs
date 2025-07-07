@@ -10,9 +10,9 @@ namespace SvgPuzzleConstraints
     public class Arrow : SvgConstraint
     {
         public override string Description => "The digits along the arrow must sum to the digit in the circle. (These digits need not necessarily be different.)";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
-            Constraints = { new Arrow(new[] { 18, 10, 20, 12, 3 }) },
+            Constraints = { new Arrow([18, 10, 20, 12, 3]) },
             Cells = { 18, 10, 20, 12, 3 },
             Good = { 7, 1, 2, 3, 1 },
             Bad = { 8, 1, 2, 3, 1 },
@@ -107,7 +107,7 @@ namespace SvgPuzzleConstraints
             }
 
             for (var startCell = 0; startCell < 81; startCell++)
-                list.AddRange(recurse(new[] { startCell }, 0));
+                list.AddRange(recurse([startCell], 0));
             return list;
         }
     }

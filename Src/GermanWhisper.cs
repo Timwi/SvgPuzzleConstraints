@@ -14,7 +14,7 @@ namespace SvgPuzzleConstraints
         public override string Description => "Adjacent digits along the line must have a difference of at least 5.";
         public static readonly Example Example = new()
         {
-            Constraints = { new GermanWhisper(new[] { 18, 10, 20, 12, 3 }) },
+            Constraints = { new GermanWhisper([18, 10, 20, 12, 3]) },
             Cells = { 18, 10, 20, 12, 3 },
             Good = { 7, 1, 8, 2, 7 },
             Bad = { 7, 3, 8, 2, 7 },
@@ -109,7 +109,7 @@ namespace SvgPuzzleConstraints
             }
 
             for (var startCell = 0; startCell < 81; startCell++)
-                list.AddRange(recurse(new[] { startCell }));
+                list.AddRange(recurse([startCell]));
             return list;
         }
     }

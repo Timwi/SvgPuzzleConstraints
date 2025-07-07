@@ -8,7 +8,7 @@ namespace SvgPuzzleConstraints
     public class OddEven : SvgCellConstraint
     {
         public override string Description => $"The digit in this cell must be {(Odd ? "odd" : "even")}.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new OddEven(11, true), new OddEven(20, false) },
             Cells = { 11, 20 },

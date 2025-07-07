@@ -10,7 +10,7 @@ namespace SvgPuzzleConstraints
     {
         public override string Description => "This digit must be greater than the digits orthogonally adjacent to it.";
 
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new MaximumCell(11) },
             Cells = { 2, 10, 11, 12, 20 },
@@ -22,7 +22,7 @@ namespace SvgPuzzleConstraints
         public MaximumCell(int cell) : base(cell) { }
         private MaximumCell() { }    // for Classify
 
-        protected override IEnumerable<Constraint> getConstraints() => PuzzleUtil.Orthogonal(Cell).Select(adj => new LessThanConstraint(new[] { adj, Cell }));
+        protected override IEnumerable<Constraint> getConstraints() => PuzzleUtil.Orthogonal(Cell).Select(adj => new LessThanConstraint([adj, Cell]));
         public override string Svg => $"<path transform='translate({Cell % 9}, {Cell / 9})' d='M.5 .05 .7 .2 .3 .2z M.95 .5 .8 .7 .8 .3z M.5 .95 .3 .8 .7 .8z M.05 .5 .2 .3 .2 .7z' opacity='.2' />";
 
         public override bool Verify(int[] grid)

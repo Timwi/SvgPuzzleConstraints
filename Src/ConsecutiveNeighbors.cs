@@ -7,7 +7,7 @@ namespace SvgPuzzleConstraints
     public class ConsecutiveNeighbors : SvgNeighborConstraint
     {
         public override string Description => "The two marked cells must be consecutive (have a difference of 1).";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new ConsecutiveNeighbors(10, 11) },
             Cells = { 10, 11 },

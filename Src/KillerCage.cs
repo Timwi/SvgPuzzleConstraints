@@ -11,9 +11,9 @@ namespace SvgPuzzleConstraints
     public class KillerCage : SvgRegionConstraint
     {
         public override string Description => $"Digits within the cage must be different{Sum.NullOr(s => $" and must add up to {s}")}.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
-            Constraints = { new KillerCage(new[] { 2, 3, 12 }, null), new KillerCage(new[] { 18, 19 }, 10) },
+            Constraints = { new KillerCage([2, 3, 12], null), new KillerCage([18, 19], 10) },
             Cells = { 2, 3, 12, 18, 19 },
             Good = { 5, 3, 6, 2, 8 },
             Bad = { 5, 3, 5, 2, 7 },

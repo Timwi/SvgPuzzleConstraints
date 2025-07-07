@@ -9,7 +9,7 @@ namespace SvgPuzzleConstraints
     public class AntiKnight : SvgCellConstraint
     {
         public override string Description => "The same digit can’t be a knight’s move in chess away from this digit.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new AntiKnight(19) },
             Cells = { 12, 19 },
@@ -20,7 +20,7 @@ namespace SvgPuzzleConstraints
         public AntiKnight(int cell) : base(cell) { }
         private AntiKnight() { }    // for Classify
 
-        protected override IEnumerable<Constraint> getConstraints() { yield return new AntiKnightConstraint(9, 9, enforcedCells: new[] { Cell }); }
+        protected override IEnumerable<Constraint> getConstraints() { yield return new AntiKnightConstraint(9, 9, enforcedCells: [Cell]); }
         public override string Svg => $@"<path fill='rgba(0, 0, 0, .2)' d='{SvgPaths.Knight}' transform='translate({Cell % 9}, {Cell / 9})' />";
 
         public override bool Verify(int[] grid)

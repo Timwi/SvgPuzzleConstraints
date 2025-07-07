@@ -13,7 +13,7 @@ namespace SvgPuzzleConstraints
         public override double ExtraTop => IsCol ? .25 : 0;
         public override double ExtraLeft => IsCol ? 0 : .75;
         public override bool ShownTopLeft => true;
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new ToroidalSandwich(false, 0, 3, 7, 17) },
             Cells = { 0, 1, 2, 3, 4, 5, 6, 7, 8 },

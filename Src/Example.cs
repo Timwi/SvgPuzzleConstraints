@@ -6,10 +6,10 @@ namespace SvgPuzzleConstraints
 {
     public class Example
     {
-        public List<SvgConstraint> Constraints = new List<SvgConstraint>();
-        public List<int> Cells = new List<int>();
-        public List<int> Good = new List<int>();
-        public List<int> Bad = new List<int>();
+        public List<SvgConstraint> Constraints = [];
+        public List<int> Cells = [];
+        public List<int> Good = [];
+        public List<int> Bad = [];
         public bool Wide = false;
         public string Reason;
 

@@ -12,7 +12,7 @@ namespace SvgPuzzleConstraints
         public override string Description => $"Digits within the cage must be different and form a consecutive set.";
         public static readonly Example Example = new()
         {
-            Constraints = { new RenbanCage(new[] { 0, 1, 2, 3, 10, 12 }) },
+            Constraints = { new RenbanCage([0, 1, 2, 3, 10, 12]) },
             Cells = { 0, 1, 2, 3, 10, 12 },
             Good = { 5, 3, 7, 4, 6, 2 },
             Bad = { 5, 3, 7, 1, 6, 2 },
@@ -39,7 +39,7 @@ namespace SvgPuzzleConstraints
             _ => false
         };
 
-        public override IEnumerable<string> SvgDefs => new[] { $@"<pattern id='renban-pattern' width='2' height='2' patternTransform='rotate(45) scale(.35355) translate(.5, .5)' patternUnits='userSpaceOnUse'><path d='M0 0h1v1H0zM1 1h1v1H1z' /></pattern>" };
+        public override IEnumerable<string> SvgDefs => [$@"<pattern id='renban-pattern' width='2' height='2' patternTransform='rotate(45) scale(.35355) translate(.5, .5)' patternUnits='userSpaceOnUse'><path d='M0 0h1v1H0zM1 1h1v1H1z' /></pattern>"];
 
         public override string Svg => $@"<path d='{GenerateSvgPath(Cells, .25, .25)}' fill='url(#renban-pattern)' stroke='none' opacity='.2' />";
 

@@ -7,7 +7,7 @@ namespace SvgPuzzleConstraints
     public class Clockface : SvgFourCellConstraint
     {
         public override string Description => $"The digits around the circular arrow must ascend in {(Clockwise ? "clockwise" : "counterclockwise")} order.";
-        public static readonly Example Example = new Example
+        public static readonly Example Example = new()
         {
             Constraints = { new Clockface(0, true), new Clockface(11, false) },
             Cells = { 0, 1, 10, 9, 11, 12, 21, 20 },
@@ -28,6 +28,6 @@ namespace SvgPuzzleConstraints
         public override string Svg => $"<circle cx='{x}' cy='{y}' r='.2' fill='white' /><path transform='translate({x}, {y}) scale({(Clockwise ? ".04" : "-.04, .04")})' d='m -4.8,-4 v 1 h 2.16 A 4,4 0 0 0 -4,0 4,4 0 0 0 0,4 4,4 0 0 0 4,0 4,4 0 0 0 2.82,-2.82 L 2.12,-2.12 A 3,3 0 0 1 3,0 3,3 0 0 1 0,3 3,3 0 0 1 -3,0 3,3 0 0 1 -1.8,-2.38 V 0 h 1 v -4 z' />";
 
         public static IList<SvgConstraint> Generate(int[] sudoku) =>
-            generate(sudoku, (cell, a, b, c, d) => verify(true, a, b, c, d) ? new[] { new Clockface(cell, true) } : verify(false, a, b, c, d) ? new[] { new Clockface(cell, false) } : Enumerable.Empty<SvgFourCellConstraint>());
+            generate(sudoku, (cell, a, b, c, d) => verify(true, a, b, c, d) ? [new Clockface(cell, true)] : verify(false, a, b, c, d) ? [new Clockface(cell, false)] : Enumerable.Empty<SvgFourCellConstraint>());
     }
 }
