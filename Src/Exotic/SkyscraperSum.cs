@@ -21,7 +21,7 @@ namespace SvgPuzzleConstraints
             Good = { 3, 5, 6, 4, 7, 2, 8, 9, 1 },
             Bad = { 4, 1, 6, 5, 2, 7, 3, 8, 9 },
             Reason = "The obstructed skyscrapers are 1, 5, 2, and 3. The rest sum up to 4+6+7+8+9 = 34.",
-            Wide = true
+            Layout = ExampleLayout.Wide
         };
 
         public SkyscraperSum(bool isCol, int rowCol, bool reverse, int clue, RowColDisplay display = RowColDisplay.Default)

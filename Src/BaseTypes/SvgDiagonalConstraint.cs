@@ -24,16 +24,13 @@ namespace SvgPuzzleConstraints
         public int Clue { get; private set; }
         [ClassifyIgnoreIfDefault]
         public bool Opposite { get; private set; }
-        [ClassifyIgnoreIfDefault]
-        public DiagonalDisplay Display { get; private set; }
 
-        public SvgDiagonalConstraint(DiagonalDirection dir, int offset, int clue, bool opposite = false, DiagonalDisplay display = DiagonalDisplay.Default)
+        public SvgDiagonalConstraint(DiagonalDirection dir, int offset, int clue, bool opposite = false)
         {
             Direction = dir;
             Offset = offset;
             Clue = clue;
             Opposite = opposite;
-            Display = display;
         }
         protected SvgDiagonalConstraint() { }  // for Classify
 
@@ -50,8 +47,6 @@ namespace SvgPuzzleConstraints
         protected const double svgArrLen = .275;
         protected const double svgArrWidth = .2;
         protected const double svgMargin = .1;
-
-        public override string Svg => Display == DiagonalDisplay.NumberOnly ? SimpleSvg : ElaborateSvg;
 
         protected string ArrowSvg => Opposite
             ? Direction switch
@@ -71,7 +66,7 @@ namespace SvgPuzzleConstraints
                 _ => null
             };
 
-        protected string SimpleSvg => ArrowSvg + (Opposite
+        protected string NumberSvg => Opposite
             ? Direction switch
             {
                 DiagonalDirection.SouthEast => $"<text text-anchor='middle' x='{9 + svgMargin + svgArrLen + svgMargin}' y='{9 - Offset + svgMargin + svgArrLen + svgMargin + .2}' font-size='.35'>{Clue}</text>",
@@ -87,9 +82,7 @@ namespace SvgPuzzleConstraints
                 DiagonalDirection.NorthWest => $"<text text-anchor='middle' x='{9 - Offset + svgMargin + svgArrLen + svgMargin}' y='{9 + svgMargin + svgArrLen + svgMargin + .2}' font-size='.35'>{Clue}</text>",
                 DiagonalDirection.NorthEast => $"<text text-anchor='middle' x='{-svgMargin - svgArrLen - svgMargin}' y='{9 - Offset + svgMargin + svgArrLen + svgMargin + .2}' font-size='.35'>{Clue}</text>",
                 _ => null
-            });
-
-        protected abstract string ElaborateSvg { get; }
+            };
 
         public override bool ClashesWith(SvgConstraint other) => other switch
         {
@@ -97,11 +90,5 @@ namespace SvgPuzzleConstraints
             SvgDiagonalConstraint lk => lk.Direction == Direction && lk.Offset == Offset,
             _ => false
         };
-
-        public enum DiagonalDisplay
-        {
-            Default,
-            NumberOnly
-        }
     }
 }

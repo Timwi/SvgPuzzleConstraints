@@ -19,7 +19,7 @@ namespace SvgPuzzleConstraints
             Good = { 1, 5, 4, 3, 7, 6, 8, 9, 2 },
             Bad = { 1, 5, 4, 6, 7, 3, 9, 8, 2 },
             Reason = "7/3/9 are three odd digits next to one another.",
-            Wide = true
+            Layout = ExampleLayout.Wide
         };
 
         public Binairo(bool isCol, int rowCol) : base(isCol, rowCol) { }

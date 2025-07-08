@@ -10,7 +10,7 @@ namespace SvgPuzzleConstraints
         public List<int> Cells = [];
         public List<int> Good = [];
         public List<int> Bad = [];
-        public bool Wide = false;
+        public ExampleLayout Layout = ExampleLayout.TopLeft3x3;
         public string Reason;
 
         public Dictionary<int, int?> GoodGivens => Enumerable.Range(0, Cells.Count).ToDictionary(ix => Cells[ix], ix => Good[ix].Nullable());

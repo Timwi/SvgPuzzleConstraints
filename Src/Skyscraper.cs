@@ -20,7 +20,7 @@ namespace SvgPuzzleConstraints
             Good = { 2, 7, 5, 9, 6, 1, 4, 3, 8 },
             Bad = { 2, 7, 8, 5, 9, 6, 1, 4, 3 },
             Reason = "The 8 obstructs the 5, and the 9 obstructs the rest of the row, leaving 4 skyscrapers visible (2, 7, 8, 9).",
-            Wide = true
+            Layout = ExampleLayout.Wide
         };
 
         public Skyscraper(bool isCol, int rowCol, bool reverse, int clue, RowColDisplay display = RowColDisplay.Default)

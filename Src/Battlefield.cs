@@ -19,7 +19,7 @@ namespace SvgPuzzleConstraints
             Good = { 2, 1, 8, 5, 7, 3, 9, 6, 4 },
             Bad = { 5, 1, 4, 6, 7, 3, 9, 2, 8 },
             Reason = "The armies (sizes 5 and 8) overlap at the 1, 4, 6 and 7, which adds up to 18.",
-            Wide = true
+            Layout = ExampleLayout.Wide
         };
 
         public Battlefield(bool isCol, int rowCol, int clue, RowColDisplay display = RowColDisplay.Default) : base(isCol, rowCol, clue, display) { }

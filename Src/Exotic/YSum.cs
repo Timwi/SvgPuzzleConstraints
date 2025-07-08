@@ -22,7 +22,7 @@ namespace SvgPuzzleConstraints
             Good = { 2, 4, 7, 6, 1, 9, 8, 5, 3 },
             Bad = { 7, 4, 2, 6, 1, 9, 8, 5, 3 },
             Reason = "The first digit is 7. The 7th digit is 8. Therefore, we sum the first 8 digits, which gives 7+4+2+6+1+9+8+5 = 42.",
-            Wide = true
+            Layout = ExampleLayout.Wide
         };
 
         public YSum(bool isCol, int rowCol, bool reverse, int clue, RowColDisplay display = RowColDisplay.Default)

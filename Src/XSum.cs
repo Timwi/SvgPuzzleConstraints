@@ -20,7 +20,7 @@ namespace SvgPuzzleConstraints
             Good = { 4, 7, 6, 2, 1, 9, 8, 5, 3 },
             Bad = { 5, 7, 6, 2, 1, 9, 8, 4, 3 },
             Reason = "The first 5 digits are summed, giving 5+7+6+2+1 = 21.",
-            Wide = true
+            Layout = ExampleLayout.Wide
         };
 
         public XSum(bool isCol, int rowCol, bool reverse, int clue, RowColDisplay display = RowColDisplay.Default)

@@ -20,7 +20,7 @@ namespace SvgPuzzleConstraints
             Good = { 4, 1, 5, 3, 9, 8, 7, 6, 2 },
             Bad = { 4, 1, 5, 7, 9, 8, 6, 3, 2 },
             Reason = "The digits after the 3 and before the 7 are 2+4+1+5 = 12.",
-            Wide = true
+            Layout = ExampleLayout.Wide
         };
 
         public ToroidalSandwich(bool isCol, int rowCol, int digit1, int digit2, int sum, RowColDisplay display = RowColDisplay.Default) : base(isCol, rowCol, sum, display)

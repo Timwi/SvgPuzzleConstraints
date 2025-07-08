@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using PuzzleSolvers;
 using RT.Util;
@@ -46,18 +45,10 @@ namespace SvgPuzzleConstraints
                 .Select(dir => new FindThe9(c, dir)))
             .ToArray();
 
-        sealed class FindThe9Constraint(int cell, CellDirection dir) : Constraint(findAffectedCells(cell, dir))
+        sealed class FindThe9Constraint(int cell, CellDirection dir) : Constraint(findCellsInDirection(cell, dir))
         {
             public int Cell { get; private set; } = cell;
             public CellDirection Direction { get; private set; } = dir;
-
-            private static IEnumerable<int> findAffectedCells(int cell, CellDirection dir)
-            {
-                var x = cell % 9;
-                var y = cell / 9;
-                for (; inRange(x) && inRange(y); x += dx(dir), y += dy(dir))
-                    yield return x + 9 * y;
-            }
 
             public override ConstraintResult Process(SolverState state)
             {

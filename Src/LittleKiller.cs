@@ -20,7 +20,7 @@ namespace SvgPuzzleConstraints
         public LittleKiller(DiagonalDirection direction, int offset, int clue, bool opposite = false) : base(direction, offset, clue, opposite) { }
         private LittleKiller() { }  // for Classify
 
-        protected override string ElaborateSvg => SimpleSvg;
+        public override string Svg => ArrowSvg + NumberSvg;
 
         protected override IEnumerable<Constraint> getConstraints() { yield return new SumConstraint(Clue, AffectedCells); }
         public override bool Verify(int[] grid) => AffectedCells.Sum(c => grid[c]) == Clue;

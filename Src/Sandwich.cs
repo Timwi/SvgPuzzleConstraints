@@ -21,7 +21,7 @@ namespace SvgPuzzleConstraints
             Good = { 4, 1, 5, 3, 9, 8, 7, 6, 2 },
             Bad = { 4, 1, 5, 3, 9, 8, 6, 7, 2 },
             Reason = "The digits between the 3 and 7 are 9+8+6 = 23.",
-            Wide = true
+            Layout = ExampleLayout.Wide
         };
 
         public Sandwich(bool isCol, int rowCol, int digit1, int digit2, int sum, RowColDisplay display = RowColDisplay.Default, bool omitCrust = false)
