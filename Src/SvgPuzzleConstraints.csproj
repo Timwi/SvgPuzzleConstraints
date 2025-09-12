@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug-Nuget;Debug-locallibs;Release</Configurations>
     <OutputPath>..\Builds\$(Configuration)-$(TargetFramework)$(RuntimeIdentifier)\</OutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)-$(TargetFramework)$(RuntimeIdentifier)\</IntermediateOutputPath>
     <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
@@ -9,12 +10,14 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="RT.Serialization" Version="2.0.1690" />
+  <ItemGroup Condition="'$(Configuration)' == 'Debug-locallibs'">
+    <ProjectReference Include="..\..\RT.Util\RT.Serialization\RT.Serialization.csproj" />
+    <ProjectReference Include="..\..\PuzzleSolvers\Src\PuzzleSolvers.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\PuzzleSolvers\Src\PuzzleSolvers.csproj" />
+  <ItemGroup Condition="'$(Configuration)' != 'Debug-locallibs'">
+    <PackageReference Include="RT.Serialization" Version="2.0.1690" />
+    <PackageReference Include="PuzzleSolvers" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
