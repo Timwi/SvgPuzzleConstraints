@@ -11,13 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug-locallibs'">
-    <ProjectReference Include="..\..\RT.Util\RT.Serialization\RT.Serialization.csproj" />
-    <ProjectReference Include="..\..\PuzzleSolvers\Src\PuzzleSolvers.csproj" />
+    <ProjectReference Include="..\..\RT.Util\RT.Serialization\RT.Serialization.csproj"/>
+    <ProjectReference Include="..\..\PuzzleSolvers\Src\PuzzleSolvers.csproj"/>
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug-locallibs'">
-    <PackageReference Include="RT.Serialization" Version="2.0.1690" />
-    <PackageReference Include="PuzzleSolvers" Version="1.0.0" />
+    <PackageReference Include="RT.Serialization" Version="2.0.1690"/>
+    <PackageReference Include="PuzzleSolvers" Version="1.0.0"/>
   </ItemGroup>
 
 </Project>
