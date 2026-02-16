@@ -45,7 +45,7 @@ namespace SvgPuzzleConstraints
                 .Select(dir => new FindThe9(c, dir)))
             .ToArray();
 
-        sealed class FindThe9Constraint(int cell, CellDirection dir) : Constraint(findCellsInDirection(cell, dir))
+        private sealed class FindThe9Constraint(int cell, CellDirection dir) : Constraint(findCellsInDirection(cell, dir))
         {
             public int Cell { get; private set; } = cell;
             public CellDirection Direction { get; private set; } = dir;

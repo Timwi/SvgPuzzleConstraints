@@ -7,8 +7,8 @@ namespace SvgPuzzleConstraints
         public bool IsCol { get; private set; }
         public int RowCol { get; private set; }
 
-        public override sealed bool IncludesCell(int cell) => false;
-        public override sealed bool IncludesRowCol(bool isCol, int rowCol, bool topLeft) => isCol == IsCol && rowCol == RowCol && topLeft == ShownTopLeft;
+        public sealed override bool IncludesCell(int cell) => false;
+        public sealed override bool IncludesRowCol(bool isCol, int rowCol, bool topLeft) => isCol == IsCol && rowCol == RowCol && topLeft == ShownTopLeft;
 
         /// <summary>
         ///     Determines whether the constraint is visually shown on the top of a column/left of a row (<c>true</c>) or the
