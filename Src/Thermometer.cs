@@ -69,7 +69,7 @@ namespace SvgPuzzleConstraints
                 var x = sofar.Last() % 9;
                 var y = sofar.Last() / 9;
                 for (var xx = x - 1; xx <= x + 1; xx++)
-                    if (xx >= 0 && xx < 9)
+                    if (xx is >= 0 and < 9)
                         for (var yy = y - 1; yy <= y + 1; yy++)
                             if (yy >= 0 && yy < 9 && !sofar.Contains(xx + 9 * yy) && sudoku[xx + 9 * yy] > sudoku[sofar.Last()]
                                 && (xx == x || yy == y || noDiagonalCrossingExists(x, y, xx, yy)))

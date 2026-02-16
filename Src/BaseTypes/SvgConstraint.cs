@@ -48,7 +48,7 @@ namespace SvgPuzzleConstraints
         public enum CellDirection { Up, Right, Down, Left }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected static bool inRange(int c) => c >= 0 && c < 9;
+        protected static bool inRange(int c) => c is >= 0 and < 9;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected static int dx(CellDirection dir) => dir switch { CellDirection.Left => -1, CellDirection.Right => 1, _ => 0 };
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,8 +59,8 @@ namespace SvgPuzzleConstraints
             var outlines = new List<(int x, int y)[]>();
             var visitedUpArrow = Ut.NewArray<bool>(9, 9);
 
-            for (int i = 0; i < 9; i++)
-                for (int j = 0; j < 9; j++)
+            for (var i = 0; i < 9; i++)
+                for (var j = 0; j < 9; j++)
                     // every region must have at least one up arrow (left edge)
                     if (!visitedUpArrow[i][j] && get(cells, i, j) && !get(cells, i - 1, j))
                         outlines.Add(tracePolygon(cells, i, j, visitedUpArrow));
@@ -75,7 +75,7 @@ namespace SvgPuzzleConstraints
                 var offset = outline.MinIndex(c => c.x + 9 * c.y) + outline.Length - 1;
                 textX = outline[(offset + 1) % outline.Length].x + .03;
                 textY = outline[(offset + 1) % outline.Length].y + .25;
-                for (int j = 0; j <= outline.Length; j++)
+                for (var j = 0; j <= outline.Length; j++)
                 {
                     if (j == outline.Length && gapX == null && gapY == null)
                     {
@@ -94,7 +94,7 @@ namespace SvgPuzzleConstraints
 
                     // “Outer” corners
                     if (dir1 == CellDirection.Up && dir2 == CellDirection.Right) // top left corner
-                        path.Append($" {x + marginX + (j == 0 ? gapX ?? 0 : 0) } {y + marginY + (j == outline.Length ? gapY ?? 0 : 0)}");
+                        path.Append($" {x + marginX + (j == 0 ? gapX ?? 0 : 0)} {y + marginY + (j == outline.Length ? gapY ?? 0 : 0)}");
                     else if (dir1 == CellDirection.Right && dir2 == CellDirection.Down)  // top right corner
                         path.Append($" {x - marginX} {y + marginY}");
                     else if (dir1 == CellDirection.Down && dir2 == CellDirection.Left) // bottom right corner

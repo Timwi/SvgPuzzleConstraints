@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using PuzzleSolvers;
-using RT.Util;
 using RT.Util.ExtensionMethods;
 
 namespace SvgPuzzleConstraints
