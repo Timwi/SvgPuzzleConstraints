@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' != 'Debug-locallibs'">
-    <PackageReference Include="RT.Serialization" Version="2.0.1817" />
+    <PackageReference Include="RT.Serialization" Version="2.0.1826" />
     <PackageReference Include="PuzzleSolvers" Version="1.3.0" />
   </ItemGroup>
 
