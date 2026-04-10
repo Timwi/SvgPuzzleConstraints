@@ -25,7 +25,7 @@ namespace SvgPuzzleConstraints
         {
             if (digits == null || digits.Length == 0 || digits.Length > 4)
                 throw new ArgumentException("Must have between 1 and 3 digits for Inclusion constraint.", nameof(digits));
-            Digits = digits.Order().ToArray();
+            Digits = digits.OrderBy(x => x).ToArray();
         }
         private Inclusion() { }     // for Classify
 

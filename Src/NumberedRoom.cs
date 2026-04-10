@@ -32,7 +32,7 @@ namespace SvgPuzzleConstraints
 
         protected override IEnumerable<Constraint> getConstraints() { yield return new IndexingConstraint(GetAffectedCells(Reverse), 0, Clue, offset: 1); }
 
-        public override bool Verify(int[] grid) => GetAffectedCells(Reverse).Select(cell => grid[cell]).ToArray().Apply(numbers => numbers[0] > 0 && numbers[0] < numbers.Length && numbers[numbers[0] - 1] == Clue);
+        public override bool Verify(int[] grid) => GetAffectedCells(Reverse).Select(cell => grid[cell]).ToArray().Apply(numbers => numbers[0] > 0 && numbers[0] <= numbers.Length && numbers[numbers[0] - 1] == Clue);
 
         public override IEnumerable<string> SvgDefs => base.SvgDefs.Concat(["""
             <linearGradient id="numbered-room" x1="64" x2="64" y1="96.202" y2="-11.015" gradientUnits="userSpaceOnUse">
